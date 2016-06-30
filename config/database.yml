@@ -6,13 +6,13 @@
 #
 default: &default
   adapter: postgresql
-  database: my_database_production
+  database: gov
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
-  database: my_database_development
+  database: gov
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

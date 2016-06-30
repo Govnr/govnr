@@ -45,4 +45,10 @@ group :development, :test do
   gem 'spring'
 end
 gem 'bootstrap_sb_admin_base_v2'
-
+gem 'administrate'
+gem 'bootstrap-sass'
+gem 'devise'
+gem 'high_voltage'
+gem 'pg'
+gem 'pundit'
+gem 'simple_form'
