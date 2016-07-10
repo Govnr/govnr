@@ -1,43 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta name='viewport', content='width=device-width, initial-scale=1.0'/>
-  <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'%>
-  <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css'%>
-  <%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <title>RailsRestaraunt</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'chart/Chart.bundle.min', 'data-turbolinks-track' => true %>
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= csrf_meta_tags %>
+    <title>gov.pan</title>
+
+
+
 </head>
+
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">R-R</a>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="header-logo">
+                <a class="navbar-brand" href="dashboard"><%= image_tag("Gov.Pan.logo.png")  %></a>
+                </div>
+            </div>
+            <!-- /.navbar-header -->
+           <div class="navbar-right">
+            <ul class="nav navbar-top-links navbar-right">
+                <%= render partial: "user/messages" %>
+                <%= render partial: "user/active_votes" %>
+                <%= render partial: "user/notifications" %>
+                <%= render partial: "user/user_menu" %>
+            </ul>
+            </div>
+            <!-- /.navbar-top-links -->
+           <%= render partial: "user/main_menu" %>
+        </nav>
+
+        <div id="page-wrapper">
+        <%= breadcrumbs pretext: "", separator: " &rsaquo; " %>
+            <%= yield %>
+        </div>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="/reservations/new">Create Reservation</a></li>
-        <li><a href="/reservations">View Reservations</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-<%= yield %>
+      <%= javascript_include_tag 'metis_menu/metisMenu.min', 'data-turbolinks-track' => true %>
+         <%= javascript_include_tag 'sb-admin-2/sb-admin-2', 'data-turbolinks-track' => true %>
 
 </body>
 </html>

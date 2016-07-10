@@ -1,0 +1,231 @@
+<% breadcrumb :petition, @petition %>
+<p id="notice"><%= notice %></p>
+
+<h1>
+ <%= @petition.title %>
+</h1>
+<p>
+ <small> <strong>Created by:</strong> <%= @petition.creator_id %></small>
+</p>
+<p>
+ <small> <strong>Tags:</strong> <%= @petition.tag_list %></small>
+</p>
+<% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+  <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => css_class %>
+<% end %>
+<div class="row">
+<div class="col-lg-6">
+<div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i>
+                Petition Description
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+  				<%= @petition.text %>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+</div>
+<div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Latest Poll Results
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <canvas id="myChart" width="200" height="300"></canvas>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Strongly Disagree", "Mostly Disagree", "Neutral Response", "Mostly Agree", "Strongly Agree"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Latest Poll Results'
+        },
+        maintainAspectRatio: false,
+        responsive: true,
+         legend: {
+            display: true,
+            position: 'bottom'
+        }
+    }
+});
+</script>
+            </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        </div>
+<div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i>
+                Discussion
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu slidedown">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-refresh fa-fw"></i> Refresh
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-check-circle fa-fw"></i> Available
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-times fa-fw"></i> Busy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-clock-o fa-fw"></i> Away
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-sign-out fa-fw"></i> Sign Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
+                                </small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning btn-sm" id="btn-chat">
+                            Send
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <!-- /.panel-footer -->
+        </div>
+<%= link_to 'Edit', edit_petition_path(@petition) %> |
+<%= link_to 'Back', petitions_path %>
+
+<%= javascript_include_tag 'raphael/raphael.min', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'morris/morris.min', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'morris/morris-data', 'data-turbolinks-track' => true %>

@@ -1,15 +1,22 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  resources :users
+
+  resources :comments
+
+  resources :petitions
+
+ get 'dashboard' => 'pages#index'
+
+ # match ':controller(/:action(/:id))', :via => get()
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   
-  resources :reservations
+  root 'pages#index'
 
-  root 'welcome#index'
-
+  get 'tags/:tag', to: 'petitions#index', as: :tag
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

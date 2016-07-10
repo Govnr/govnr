@@ -1,0 +1,21 @@
+<%= simple_form_for(@petition) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :text %>
+    <%= f.input :creator_id %>
+  </div>
+
+    <div class="form-inputs">
+	  <%= f.label :tag_list, "Tags (separated by commas)" %><br />
+	  <%= f.text_field :tag_list %>
+	</div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+
+
+
+<% end %>
