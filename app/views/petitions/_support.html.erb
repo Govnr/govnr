@@ -1,0 +1,4 @@
+ <%= simple_form_for :support, remote:true, :url => url_for(:action => 'support', :controller => 'petitions',
+    :method => 'post', id: @petition.id ) do |f| %>
+   <%= f.submit "Support this petition", :class => 'btn btn-success'%>
+  <% end %>

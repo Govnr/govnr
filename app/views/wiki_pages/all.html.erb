@@ -1,0 +1,25 @@
+<%= wiki_page_style -%>
+<% breadcrumb :wiki, @page %>
+<div class="row-spacer"></div>
+ <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+    <div class="pull-left"> <i class="fa fa-book fa-fw"></i></div>
+    All pages
+        <div class="pull-right">
+            <div>
+             <%= link_to( wt( 'New page' ), wiki_page_new_path, :class => "btn btn-default btn-xs" ) %>
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <ul>
+		  <%= wiki_paginate @pages do -%>
+		    <% @pages.each do |page| -%>
+		      <li><%= link_to page.title, wiki_page_path( page ) %></li>
+		    <% end -%>
+		  <% end -%>
+		</ul>
+    </div>
+    <!-- /.panel-body -->
+</div>

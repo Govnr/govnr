@@ -3,13 +3,30 @@
         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+
+    <% if user_signed_in? %>
+        <li><%= link_to conversations_path  do %>
+            <i class="fa fa-envelope fa-fw"></i> Messages
+        <% end %>
+        </li>
+        <li><%= link_to edit_user_registration_path  do %>
+            <i class="fa fa-user fa-fw"></i> User Profile
+        <% end %>
         </li>
         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
         </li>
         <li class="divider"></li>
-        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        <li>
+        <%= link_to destroy_user_session_path, :method => :delete do %>
+            <i class="fa fa-sign-out fa-fw"></i> Log Out
+        <% end %>
         </li>
+    <% else %>
+        <li>
+        <a href="/login"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+        </li>
+    <% end %>
+        
     </ul>
     <!-- /.dropdown-user -->
 </li>

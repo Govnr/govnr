@@ -15,7 +15,9 @@
             <li>
                 <a href="/pages/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-
+            <li>
+                <a href="/wiki"><i class="fa fa-book fa-fw"></i> Wiki</a>
+            </li>
             <!-- Petitions Menu Items -->
             <li>
                 <a href="/petitions/"><i class="fa fa-users fa-fw"></i> Petitions<span class="fa arrow"></span></a>
@@ -24,10 +26,7 @@
                    <%= link_to("Petitions", petitions_path) %>
                     </li>
                     <li>
-                      <%= link_to("Engaged Petitions", petitions_path) %>
-                    </li>
-                    <li>
-                      <%= link_to("Your Petitions", petitions_path) %>
+                      <%= link_to("Data", data_petitions_path) %>
                     </li>
                     <li>
                          <%= link_to("Create a Petition", new_petition_path) %>

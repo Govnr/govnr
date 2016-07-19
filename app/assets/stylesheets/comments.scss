@@ -1,3 +1,73 @@
 // Place all the styles related to the Comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.comment {
+	margin-right: 0px;
+	padding: 4px 4px;
+}
+
+.comment-reported {
+	background-color: #f2dede;
+}
+
+.comment_content
+{
+	font-size: 14px;
+}
+
+.comment-send
+{
+	height: 100% !important;
+	vertical-align: top;
+}
+
+.comment-links a
+{
+	font-size: 10px;
+	text-decoration: none;
+}
+
+.comment-text
+{
+	padding:2px;
+	display: inline-block;
+	color: #888;
+}
+
+.radio-options > span
+{
+	margin:5px;
+}
+
+.radio-options > span > label > input
+{
+	margin:5px;
+}
+
+.comment-report-form
+{
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	border: 1px solid transparent;
+	padding-top: 8px;
+	padding-left: 10px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	height: 46px;
+}
+
+.comment_report_comment{
+	display: inline-flex;	
+}
+
+.discussion-body
+{
+	height: auto !important;
+	max-height: 350px !important;
+	overflow-y: scroll;
+	padding: 5px;
+}
+

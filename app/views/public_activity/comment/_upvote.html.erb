@@ -1,0 +1,7 @@
+upvoted a
+
+<% if activity.trackable %>
+  <%= link_to 'comment', activity.trackable.commentable %>
+<% else %>
+  which has since been removed
+<% end %>

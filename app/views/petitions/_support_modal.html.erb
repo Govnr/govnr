@@ -1,0 +1,20 @@
+<!-- modal -->
+  <div class="modal fade" id="petition-support-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Support this Petition</h4>
+        </div>
+        <div class="modal-body">
+        <% if current_user.voted_as_when_voted_for @petition %>
+          <p>You've already supported this petition, and you can't support it again or retract your support.</p>
+        <% else %>
+        <p>Are you sure you want to support this petition? You cannot retract your support once you click this button.</p>
+          <%= render :partial => "support", petition: @petition  %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /modal -->

@@ -5,6 +5,4 @@ class PagesController < ApplicationController
   end
   	def manifesto
   end
-	def morris
-  end
 end

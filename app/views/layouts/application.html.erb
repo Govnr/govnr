@@ -35,24 +35,33 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="header-logo">
-                <a class="navbar-brand" href="dashboard"><%= image_tag("Gov.Pan.logo.png")  %></a>
+                <a class="navbar-brand" href="/"> <span><%= image_tag("Gov.Pan.logo.png")  %></span><span class="navbar-title">Gov.Pan<span></a>
                 </div>
             </div>
             <!-- /.navbar-header -->
            <div class="navbar-right">
             <ul class="nav navbar-top-links navbar-right">
+             <% if user_signed_in? %>
                 <%= render partial: "user/messages" %>
                 <%= render partial: "user/active_votes" %>
                 <%= render partial: "user/notifications" %>
+             <% end %>
                 <%= render partial: "user/user_menu" %>
             </ul>
             </div>
             <!-- /.navbar-top-links -->
-           <%= render partial: "user/main_menu" %>
+            <% if user_signed_in? %>
+               <%= render partial: "user/main_menu" %>
+            <% else %>
+                <%= render partial: "user/guest_menu" %>
+            <% end %>
         </nav>
-
+        
         <div id="page-wrapper">
-        <%= breadcrumbs pretext: "", separator: " &rsaquo; " %>
+        <div id="flash-messages">
+            <%= render partial:'layouts/messages' %>
+        </div>
+            <%= breadcrumbs pretext: "", separator: " &rsaquo; " %>
             <%= yield %>
         </div>
     </div>

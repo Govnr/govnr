@@ -1,0 +1,30 @@
+<%= wiki_page_style %>
+<% breadcrumb :wiki_page_new, @page %>
+
+<h1><%=wt 'Creating a new wiki page' %></h1>
+
+ <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+    <div class="pull-left"> <i class="fa fa-book fa-fw"></i></div>
+        <%= wiki_page_info %>
+        <div class="pull-right">
+            <div>
+            <%= wiki_page_actions %>
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+         <%= wiki_page_form do |f| %>
+		  <%= f.hidden_field :previous_version_number, :value => f.object.last_version_number %>
+		  <p><%=wt 'Title:' %><br /><%= f.text_field :title %></p>
+		  <p><%=wt 'Content:' %><br /><%= f.text_area :content %></p>
+		  <%= f.hidden_field :comment, :value => 'First Revision'%>
+		  <%= hidden_field_tag :path, @page.path %>
+
+		  <input type="submit" value="<%=wt 'Create page' %>" class="submit" />
+		<% end %>
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->

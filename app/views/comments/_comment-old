@@ -1,0 +1,19 @@
+<li class="list-group-item">
+    <div class="header">
+        <% unless ( comment.user_id.nil? || comment.user_id == 0) %>
+            
+        <% end %>
+        <% @user = User.find(comment.user_id) %>
+        <strong class="primary-font"><%= @user.first_name + ' ' + @user.last_name %></strong>
+        <small class="pull-right text-muted"><i class="fa fa-clock-o fa-fw"></i><%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %></small>
+    </div>
+    <blockquote><span class="comment-text"><%= comment.text %></span></blockquote>
+    <% from_reply_form ||= nil %>
+	<% unless from_reply_form %>
+	  <% if comment.leaf? %>
+	    <!-- No replies on this thread -->
+	  <% end %>
+	  
+	  <%= render 'form', comment: @comment = Comment.new(parent_id: comment.id, commentable_id: :comment_id, commentable_type: :commentable_type) %>
+	<% end %>
+</li>

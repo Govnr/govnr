@@ -1,0 +1,24 @@
+<%= wiki_page_style %>
+<% breadcrumb :wiki_page, @page %>
+<h1><%=h @page.title %></h1>
+
+
+ <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+            <div class="pull-left"> <i class="fa fa-book fa-fw"></i></div>
+           
+                <%= wiki_page_info %>
+               
+                <div class="pull-right">
+                    <div>
+                    <%= wiki_page_actions %>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                  <%=wiki_content @page.content %>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->

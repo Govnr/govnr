@@ -1,0 +1,45 @@
+<% @req_votes = Petition.required_votes %>
+<div class="petition-supporter-bar"><span id="bar-<%= petition.id %>"><%= petition.votes_for.size %></span></div>
+<div align="centre">
+</div>
+<script>
+var opt = {
+	numType:'absolute',
+  horLabelPos:'left',
+ numMin:0,
+ numMax:<%= @req_votes %>,
+ horBarHeight:15,
+ colorRange:true,
+ colorRangeLimits: {
+  critical: '0-20',
+  newRangeOne: '21-40-rgb(241,144,40)',
+  newRangeTwo: '41-60-green',
+  newRangeThree: '61-90-#4aa64f',
+  optimal: '91-100'
+ },
+ milestones: {
+  1: {
+   mlPos: <%= (@req_votes / 3) %>,
+   mlId: false,
+   mlClass: 'bi-custom',
+   mlDim: '100%',
+   mlLabel: '<%= (@req_votes / 3) %>',
+   mlLabelVis: 'hover',
+   mlHoverRange: 15,
+   mlLineWidth: 1
+  },
+  2: {
+   mlPos: <%= (@req_votes / 3) * 2 %>,
+   mlId: false,
+   mlClass: 'bi-custom',
+   mlDim: '100%',
+   mlLabel: '<%= (@req_votes / 3) * 2 %>',
+   mlLabelVis: 'hover',
+   mlHoverRange: 15,
+   mlLineWidth: 1
+  }
+ }
+
+};
+ $('#bar-<%= petition.id %>').barIndicator(opt);
+</script> 

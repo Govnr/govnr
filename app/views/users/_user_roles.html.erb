@@ -1,0 +1,9 @@
+  <%= @user.roles.each do |role| %> 
+     <span class="btn btn-default btn-xs">
+      <% if role == :admin %>
+        <i class="fa fa-key fa-fw"></i> Admin
+      <% elsif role == :moderator %>
+        <i class="fa fa-wrench fa-fw"></i> Moderator
+      <% end %>
+     </span>
+  <% end %>

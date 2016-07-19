@@ -1,17 +1,33 @@
 <%= simple_form_for(@user) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email %>
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :address %>
-    <%= f.input :postcode %>
-    <%= f.input :encrypted_password %>
-    <%= f.input :salt %>
-  </div>
+<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+    <p> Email:</br> <%= f.text_field :email%> </p>
+    <p> Password:</br> <%= f.password_field :password%></p>
+    <p> Password Confirmation:</br> <%= f.password_field :password_confirmation%> </p>
+    <p> First Name:</br> <%= f.text_field :first_name%> </p>
+    <p> Last Name:</br> <%= f.text_field :last_name%> </p>
+    <p> Address:</br> <%= f.text_field :address%> </p>
+    <p> Postcode:</br> <%= f.text_field :postcode%> </p>
+
+    
+    <% for role in User::ROLES %>
+      <%= check_box_tag "user[roles][#{role}]", role, @user.roles.include?(role), {:name => "user[roles][]"}%>
+      <%= label_tag "user_roles_#{role}", role.to_s.humanize %><br />
+    <% end %>
+      <%= hidden_field_tag "user[roles][]", "" %>
+
+
+    <%= f.submit :Signup %>
+  <% end %>
+  <% if @user.errors.any? %>
+    <ul class="Signup_Errors">
+    <% for message_error in @user.errors.full_messages %>
+      <li>* <%= message_error %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+
 <% end %>

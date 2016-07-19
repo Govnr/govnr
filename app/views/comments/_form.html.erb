@@ -1,12 +1,11 @@
-<%= simple_form_for(@comment) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :text %>
-    <%= f.input :user_id %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+<%= simple_form_for([@commentable, @comment]) do |f| %>
+   <%= f.hidden_field  :parent_id, :value => comment.parent_id %>
+   <div class="input-group">
+	<%= f.input :content, :as => :string, :label=>false,  :input_html => { :id => 'btn-input', :class => 'form-control input-sm', :type => 'text'} %>
+    <span class="input-group-btn comment-send">
+		<%= f.button :submit, 'Send', class: 'btn btn-primary btn-sm', :placeholder => 'Type your comment here...' %>
+	</span>
   </div>
 <% end %>
+

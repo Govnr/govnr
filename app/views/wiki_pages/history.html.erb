@@ -1,0 +1,27 @@
+<%= wiki_page_style %>
+<% breadcrumb :wiki_page_history, @page %>
+
+<h1><%=wt '%{page_title} - History', :page_title => @page.title %></h1>
+
+
+ <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+            <div class="pull-left"> <i class="fa fa-book fa-fw"></i></div>
+           
+                <%= wiki_page_info %>
+               
+                <div class="pull-right">
+                    <div>
+                    <%= wiki_page_actions %>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                  <%= wiki_page_history %>
+
+					<%= link_to "Back to page", wiki_page_path(@page) %>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->

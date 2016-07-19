@@ -6,6 +6,11 @@ crumb :petitions do
   link "Petitions", petitions_path
 end
 
+crumb :petitionsdata do
+  link "Data", petitions_data_path
+end
+
+
 crumb :petition do |petition|
   link petition.id, petition_path(petition)
   parent :petitions

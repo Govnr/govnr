@@ -1,0 +1,9 @@
+<h4><%= @petition.votes_for.size %> people have supported this petition so far.</h4>
+<% if current_user.voted_as_when_voted_for @petition %>
+	<span class="text-muted">Including you.</span>
+<% else %>
+<br />
+<button class="btn btn-success" data-toggle="modal" data-target="#petition-support-modal">
+<i class="icon-plus icon-white"></i> Support this petition
+</button>
+<% end %>

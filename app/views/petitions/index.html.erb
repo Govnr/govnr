@@ -3,100 +3,45 @@
 
 <h1>Petitions</h1>
 
-<!-- <div class="container-fluid"> -->
-<!-- <div class="row">
-	<div class="col-sm-8">Title</div>
-	<div class="col-sm-3">Creator</div>
-	<div class="col-sm-1">Actions</div>
-</div> -->
-<div class="row">
- <div class="col-lg-6">
-  <div class="panel panel-default panel-toolbar">
- 	<div class="panel-heading">
-        <i class="fa fa-pie-chart-o fa-fw"></i> Tags
+ <div class="row">
+ <div class="col-lg-12">
+ <div class="panel panel-default panel-toolbar">
+  <div class="panel-heading">
+        <i class="fa fa-tag fa-fw"></i> Tags
     </div>
     <div class="panel-body panel-toolbar">
-			<div id="tag_cloud">
+    <div id="tag_cloud">
 
-		</div>
-	</div>
+<% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+ <%= link_to tag.name, tag_path(tag.name), :class => css_class %>
+<% end %>
+    </div>
   </div>
- </div>
- <div class="col-lg-6">
- <div class="panel panel-default panel-toolbar">
-            <div class="panel-heading">
-                <i class="fa fa-pie-chart-o fa-fw"></i> Petition Data
-            </div>
-            <div class="panel-body panel-toolbar">
-            <div class="row">
-            <div class="col-lg-6">
-            </div>
-            <div class="col-lg-6">
-	            <canvas id="petitionSpreadChart" width="250px" height="250px"></canvas>
-					<script>
-					window.onload = function(){
-						var ctx = document.getElementById("petitionSpreadChart");
-					var petitionSpread = new Chart(ctx, {
-					    type: 'doughnut',
-					    data: {
-					        labels: ["0-20%", "20-50%", "50%+"], 
-					        position: 'bottom',
-					        datasets: [{
-					            label: '# of Votes',
-					            data: [300, 50, 100],
-					            backgroundColor: [
-					                "#ff6363",
-					                "#FFCE56",
-					                "#62BA46"
-					            ],
-					            hoverBackgroundColor: [
-					                "#fe8383",
-					                "#ffd556",
-					                "#6bcd4c"
-					            ]
-					        }]
-					    },
-					    options: {
-					    	 title: {
-					            display: true,
-					            text: 'Petition Spread'
-					        },
-					        maintainAspectRatio: false,
-					        responsive: true,
-					         legend: {
-					            display: true,
-					            position: 'bottom'
-					        }
-					    },
-					    animation:{
-					        animateScale:true
-					    }
-					});
-					}
-					
-					// document.getElementById('petitionSpreadChart-legend').innerHTML = petitionSpread.generateLegend();
-					</script>
-				</div>
-            </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        </div>
+  </div>
+
+</div>
+<!-- /col-lg6 -->
 </div>
 
-    <% @petitions.each do |petition| %>
-      <div class="row row-listitem">
-               <div class="col-sm-8"><div class="listitem-title"><%= link_to petition.title, petition %></div></div>
-        <div class="col-sm-3"><%= petition.creator_id %></div>
-        <div class="col-sm-1"><small><%= link_to 'Show', petition %><br>
-        					<%= link_to 'Edit', edit_petition_path(petition) %><br>
-        					<%= link_to 'Destroy', petition, method: :delete, data: { confirm: 'Are you sure?' } %></small></div>
-      </div>
-      <div class="row-spacer"></div>
-    <% end %>
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+   <div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+       <%= render(partial: 'petitions/filters') %>
+    </div>
+  </div>
+ </div>
+ </div>
+
+
+
+<div id="filterrific_results">
+
+<%= render(partial: 'petitions/list', locals: { petitions: @petitions }) %>
+
+</div>
 
 <br>
 
 <%= link_to 'New Petition', new_petition_path %>
-
-<%= javascript_include_tag 'chart/Chart.bundle.min', 'data-turbolinks-track' => true %>

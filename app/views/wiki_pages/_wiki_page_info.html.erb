@@ -1,0 +1,6 @@
+<div class="wiki_page_info"><small>
+  <% unless @page.updated_at.nil? %>
+  <%= (wt "Revised on %{time} by %{user}", :time => l( page.updated_at, :format => :long ), :user => wiki_user( page.updator ) ).html_safe %>
+  <% end %>
+  </small>
+</div>

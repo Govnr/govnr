@@ -2,7 +2,7 @@
 
 <p>
   <strong>Text:</strong>
-  <%= @comment.text %>
+  <%= @comment.content %>
 </p>
 
 <p>
@@ -10,5 +10,4 @@
   <%= @comment.user_id %>
 </p>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to "Back", request.referer.present? ? request.referer : root_path %>

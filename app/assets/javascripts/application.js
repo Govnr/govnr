@@ -11,10 +11,23 @@
 // about supported directives.
 //
 //= require jquery/jquery.min
+//= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require dataTables/jquery.dataTables
+//= require jquery.turbolinks
+//= require chosen-jquery
 //= require metis_menu/metisMenu.min
 //= require bootstrap/bootstrap.min
+//= require moment
+//= require bootstrap-datetimepicker
+//= require messages
+//= require ImageSelect.jquery
+//= require jquery.easing
+//= require jquery.easing.compatibility
+//= require jquery-barIndicator
+//= require filterrific/filterrific-jquery
+
+
 
 

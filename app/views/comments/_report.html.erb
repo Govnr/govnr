@@ -1,0 +1,20 @@
+
+	<div class="comment-report-form">
+	 <%= simple_form_for([@commentable, @comment], :url => url_for(:action => 'report', :controller => 'comments'),
+    :method => 'post') do |f| %>
+   	   <%= f.hidden_field  :commentable_type, :value => comment.commentable_type %>
+   	   <%= f.hidden_field  :commentable_id, :value => comment.commentable_id %>
+   	   <%= f.hidden_field  :id, :value => comment.id %>
+	   <%= f.hidden_field  :reporter_id, :value => current_user.id %>
+	Report this comment as: 
+		<span class="radio-options">
+	   <%= f.collection_radio_buttons :report_reason, [['abusive', 'Abusive'] ,['offensive', 'Offensive'],['spam', 'Spam']],:first, :last %>
+	   </span>
+	   <span>
+		<%= f.input :report_comment, :as => :string, :label=>false,  :input_html => { :id => 'btn-input', :class => 'input-sm', :type => 'text', :placeholder => 'Reason'} %>
+		</span>
+		<span>
+		<%= f.button :submit, 'Send Report', class: 'btn btn-danger btn-sm', :placeholder => 'Type your comment here...' %>
+		</span>
+		<% end %>
+	 </div>

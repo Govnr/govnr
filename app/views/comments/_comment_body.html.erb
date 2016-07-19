@@ -1,0 +1,78 @@
+<div class="header">
+    <% if ( comment.user_id.present? ) %>
+         <% @user = User.find(comment.user_id) %>
+    <strong class="primary-font"><%= @user.first_name + ' ' + @user.last_name %></strong>
+    <% end %>
+    <% if ( current_user.has_role?(:moderator)) %>
+        
+    <% end %>
+    <small class="pull-right text-muted"><i class="fa fa-clock-o fa-fw"></i><%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %></small>
+</div>
+<div class="comment-text">
+  <span>
+  <% if comment.content.length > 250 %>
+    <%= truncate(comment.content, length: 250) %>
+    <%= link_to ' Read more', '', class: "read-more-#{comment.id}" %>
+    <script>
+      $('.read-more-<%= comment.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript comment.content %>')
+      })
+    </script>
+  <% else %>
+    <%= comment.content %>
+  <% end %>
+  </span>
+</div>
+<div class="comment-links">
+    <span>
+    <%= link_to 'Reply', '', class: "reply-#{comment.id}" %>
+    <script>
+      $('.reply-<%= comment.id %>').on('click', function(e) {
+        e.preventDefault()
+         $("#comment-form-container-<%= comment.id %>").html('<%= escape_javascript render partial:'/comments/form', commentable: @commentable, locals: {comment: Comment.new(parent_id: comment.id)} %>')
+      })
+    </script>
+    </span>
+    <span>
+    <%= link_to 'Report', '', class: "report-#{comment.id}" %>
+    <script>
+      $('.report-<%= comment.id %>').on('click', function(e) {
+        e.preventDefault()
+        $("#comment-form-container-<%= comment.id %>").html('<%= escape_javascript render partial:'/comments/report', commentable: @commentable, locals: {comment: comment } %>')
+      })
+    </script>
+    </span>
+    <% @user_vote = current_user.voted_as_when_voted_for comment %>
+    <% if @user_vote%>
+        <strong>
+        <% @u_link_text = "Upvoted"; %>
+	<% else %>
+		<% @u_link_text = "Upvote"; %>
+    <% end %>
+    <%= link_to @u_link_text, { :controller => :comments, :action => :upvote, :commentable_type => comment.commentable_type, :commentable_id => comment.commentable_id, :comment_id => comment.id } %>
+   <small class="text-muted">
+   (<%= comment.get_upvotes.size %>)
+   </small>
+    <% if @user_vote %>
+    </strong>
+    <% end %>
+
+	<% if @user_vote == false %>
+    	<strong>
+    	<% @d_link_text = "Downvoted"; %>
+	<% else %>
+		<% @d_link_text = "Downvote"; %>
+    <% end %>
+    <%= link_to @d_link_text, { :controller => :comments, :action => :downvote, :commentable_type => comment.commentable_type, :commentable_id => comment.commentable_id, :comment_id => comment.id } %>
+    <small class="text-muted">
+     (<%= comment.get_downvotes.size %>)
+    </small>
+	<% if  @user_vote == false %>
+    	</strong>
+    <% end %>
+</div>
+<div id="comment-form-container-<%= comment.id %>"></div>
+<div class="comment-children">
+<%= nested_comments comment.children %>
+</div>
