@@ -1,5 +1,5 @@
-  <%= @user.roles.each do |role| %> 
-     <span class="btn btn-default btn-xs">
+  <% @user.roles.each do |role| %> 
+     <span class="role-bar">
       <% if role == :admin %>
         <i class="fa fa-key fa-fw"></i> Admin
       <% elsif role == :moderator %>

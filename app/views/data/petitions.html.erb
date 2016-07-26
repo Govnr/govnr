@@ -1,61 +1,9 @@
-<h1>Petitions Data</h1>
-
-<div class="panel panel-default panel-toolbar">
-            <div class="panel-heading">
-                <i class="fa fa-pie-chart fa-fw"></i> Petition Support
-            </div>
-            <div class="panel-body panel-toolbar">
-            <div class="row">
-            <div class="col-lg-6">
-            </div>
-            <div class="col-lg-6">
-	            <canvas id="petitionSpreadChart" width="250px" height="250px"></canvas>
-					<script>
-					window.onload = function(){
-						var ctx = document.getElementById("petitionSpreadChart");
-					var petitionSpread = new Chart(ctx, {
-					    type: 'doughnut',
-					    data: {
-					        labels: ["0-20%", "20-50%", "50%+"], 
-					        position: 'bottom',
-					        datasets: [{
-					            label: '# of Votes',
-					            data: [300, 50, 100],
-					            backgroundColor: [
-					                "#ff6363",
-					                "#FFCE56",
-					                "#62BA46"
-					            ],
-					            hoverBackgroundColor: [
-					                "#fe8383",
-					                "#ffd556",
-					                "#6bcd4c"
-					            ]
-					        }]
-					    },
-					    options: {
-					    	 title: {
-					            display: true,
-					            text: 'Petition Spread'
-					        },
-					        maintainAspectRatio: false,
-					        responsive: true,
-					         legend: {
-					            display: true,
-					            position: 'bottom'
-					        }
-					    },
-					    animation:{
-					        animateScale:true
-					    }
-					});
-					}
-					
-					// document.getElementById('petitionSpreadChart-legend').innerHTML = petitionSpread.generateLegend();
-					</script>
-				</div>
-            </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        </div>
+<% breadcrumb :petitionsdata %>
+<div class="row">
+<div class="col-lg-6">
+	<%= render(:partial => "/data/petitions/petitions_count") %>
+</div>
+<div class="col-lg-6">
+	<%= render(:partial => "/data/petitions/petitions_support_spread") %>
+</div>
+</div>

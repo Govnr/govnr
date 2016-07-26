@@ -1,10 +1,39 @@
 <% breadcrumb :conversations %>
+<div class="panel panel-default">
+<div class="panel-heading">
+	<div class="pull-left icon-space">
+  <i class="fa fa-comments fa-fw"></i>
+  Conversations
+	  </div>
 
-<h1 class="page-header">Inbox</h1>
-<p><%= link_to 'Start conversation', new_message_path, class: 'btn btn-lg btn-primary' %></p>
+  <div class="pull-left">
+      <ul class="nav nav-pills conversations-nav">
+      <%= mailbox_section 'inbox', @box %>
+      <%= mailbox_section 'sent', @box %>
+      <%= mailbox_section 'trash', @box %>
+    </ul>
+  </div>
+      <% if @box == 'trash' %>
+     <div class="pull-right">
+	    <p><%= link_to 'Empty trash', empty_trash_conversations_path, class: 'btn btn-danger btn-xs', method: :delete,
+	                   data: {confirm: 'Are you sure?'} %></p>
+       </div>
+	  <% end %>
+	  <% if @box == 'inbox' %>
+     <div class="pull-right">
+	    <p><%= link_to 'Start conversation', new_message_path, class: 'btn btn-primary btn-xs' %></p>
+       </div>
+	  <% end %>
+  <div class="clearfix"></div>
+</div>
 
-<ul class="list-group">
-  <%= render partial: 'conversations/conversation', collection: @conversations %>
-</ul>
-
-<%= paginate @conversations %>
+<div class="panel-body">
+	<% if @conversations.size > 0 %>
+    <ul class="list-group">
+      <%= render partial: 'conversations/conversation', collection: @conversations %>
+    </ul>
+	<% else %>
+		<div class="text-muted">You have no messages in this box.</div>
+	<% end %>
+</div>
+</div>

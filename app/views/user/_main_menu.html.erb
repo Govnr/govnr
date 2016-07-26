@@ -1,26 +1,45 @@
  <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <li class="sidebar-search">
+            <li><form action="<%= url_for(:controller => 'search', :action => 'search') %>" method = 'get'>
                 <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
+                    
+                      <%= text_field_tag :q, params[:q], placeholder: 'Search...', class: 'form-control' %>
+                       <span class="input-group-btn">
+                          <%= button_tag class: "btn btn-default", name: nil, type: 'submit' do %>
+                          <i class="fa fa-search"></i>
+                          <% end %>
+                      </span>
                 </div>
-                <!-- /input-group -->
+                      </form>
+            </li>
+            <% if current_user.has_role?(:admin) %>
+               
+                 <li class='<%= 'active' if current_page? action: :index %>'>
+                 
+                     <%= link_to admin_configuration_path do %>
+                         <i class="fa fa-cogs fa-fw"></i> Admin
+                     <% end %>
+                 </li>
+             <% end %>
+            <li>
+                <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="/pages/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
-            <li>
-                <a href="/wiki"><i class="fa fa-book fa-fw"></i> Wiki</a>
+                <a href="*"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
+                 <ul class="nav nav-second-level">
+                 
+                 <li class='<%= 'active' if current_page? action: :index %>'>
+                   <%= link_to("User List", users_path) %>
+                    </li>
+                    <li class='<%= 'active' if current_page? action: :following %>'>
+                   <%= link_to("Following", following_user_path(current_user.id)) %>
+                    </li>
+                </ul>
             </li>
             <!-- Petitions Menu Items -->
             <li>
-                <a href="/petitions/"><i class="fa fa-users fa-fw"></i> Petitions<span class="fa arrow"></span></a>
+                <a href="*"><i class="fa fa-bullhorn fa-fw"></i> Petitions<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                    <%= link_to("Petitions", petitions_path) %>
@@ -29,11 +48,13 @@
                       <%= link_to("Data", data_petitions_path) %>
                     </li>
                     <li>
-                         <%= link_to("Create a Petition", new_petition_path) %>
+                       <%= link_to("Create a Petition", new_petition_path) %>
                     </li>
                 </ul>
             </li>
-            
+            <li>
+                <a href="/wiki"><i class="fa fa-book fa-fw"></i> Wiki</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

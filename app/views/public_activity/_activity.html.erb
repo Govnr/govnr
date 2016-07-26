@@ -1,0 +1,47 @@
+<article class="panel <%= @panel_class %>">
+      <div class="panel-heading">
+     <span><i class="fa <%= @panel_icon %>"></i> 
+     <%= link_to activity.owner.name, activity.owner if activity.owner %>
+     </span>
+
+     	  <div class="time pull-right"><small><i class="fa fa-clock-o"></i><time> <%= activity.created_at %></time></small></div>
+	<% if activity.trackable %>
+	 <%= activity.trackable_type %>
+		<% if defined? activity.trackable.commentable %>
+		  <% if activity.trackable.commentable.present? %>
+		  <%= link_to @past_participle,  [activity.trackable.commentable, activity.trackable] %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> '<%=  link_to activity.trackable.commentable.name,  [activity.trackable.commentable] %>'
+		  <% else %>
+		     <%= @past_participle %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> which has now been removed.
+		  <% end %>
+		<% else %>
+		 <%= @past_participle %> <%= @definite_article %> <%= @object %> '<%= link_to activity.trackable.name,  activity.trackable %>'
+		<% end %>
+
+	    </div>
+	    <div class="clearfix"></div>
+	    <!-- Body -->
+	    <% if @body_content.present? %>
+	    <div class="panel-body">
+		  <span class="text-muted">
+		  <% if @truncate_length >= 0 &&  @body_content.length > @truncate_length %>
+		  "
+		    <%= truncate(@body_content, length: 250) %>
+		    <%= link_to '" Read more', '', class: "read-more-#{activity.trackable.id}" %>
+		    <script>
+		      $('.read-more-<%= activity.trackable.id %>').on('click', function(e) {
+		        e.preventDefault()
+		        $(this).parent().html('<%= escape_javascript @body_content %>')
+		      })
+		    </script>
+		 <% else %>
+		    <%= @body_content %>
+		 <% end %>
+		  </span>
+	    </div>
+	    <% end %>
+	    <!-- /Body -->
+	<% else %>
+	  <%= @past_participle %> <%= @definite_article %> <%= @object %> which has now been removed.
+	  </div>
+	<% end %>
+</article>

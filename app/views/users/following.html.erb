@@ -1,0 +1,28 @@
+<% breadcrumb :following %>
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+   <div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+       <%= render(partial: 'users/filters') %>
+    </div>
+  </div>
+ </div>
+ </div>
+
+<div id="page_results">
+
+<%= render(partial: 'users/following_list', locals: { users: @users }) %>
+<script type="text/javascript" >
+
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });
+
+</script>
+</div>

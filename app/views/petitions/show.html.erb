@@ -1,17 +1,16 @@
 <% breadcrumb :petition, @petition %>
 <p id="notice"><%= notice %></p>
-
 <h1>
  <%= @petition.name %>
 </h1>
 <p>
- <small> <strong>Created by:</strong> <%= User.find(@petition.creator_id).name %></small>
+ <small> <strong>Created by:</strong> <%= link_to User.find(@petition.creator_id).name, user_path(@petition.creator_id) %></small>
 </p>
 <p>
  <small> <strong>Tags:</strong> <%= @petition.tag_list %></small>
 </p>
 <% @petition.tag_list do |tag| %>
-<%= link_to tag tag_path(tag) %>
+<%= link_to tag petition_tag_path(tag), :tagged_with => tag %>
 <% end %>
 <div class="row">
 <div class="col-lg-6">
@@ -40,16 +39,15 @@
         </div>
       
         <%= render partial:'support_modal' %>
-
-            <%= render(partial: 'petitions/milestones', locals:{ petition: @petition} ) %>
-                <small>A total of <%= @req_votes %> supporters will trigger a motion.</small>
-
+        <%= render(partial: 'petitions/milestones', locals:{ petition: @petition} ) %>
+        <small>A total of <%= @req_votes %> supporters will trigger a motion.</small>
         </div>
   <!-- /.panel-body -->
     </div>
 </div>
 </div>
-
+<div class="row">
+<div class="col-lg-12">
 <div class="chat-panel panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-comments fa-fw"></i>
@@ -64,6 +62,8 @@
         <%= render partial:'/comments/form', commentable: @petition, locals: {comment: Comment.new(parent_id: nil)} %>
     </div>
     <!-- /.panel-footer -->
+</div>
+</div>
 </div>
 <%= link_to 'Edit', edit_petition_path(@petition) %> |
 <%= link_to 'Back', petitions_path %>

@@ -1,0 +1,12 @@
+<%# app/views/users/_list.html.erb %>
+<% @users.each do |user| %>
+  <%= render user %>
+  <div class="row-spacer"></div>
+<% end %>
+
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+    <%= paginate @users, :remote => true %>
+  </div>
+ </div>

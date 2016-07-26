@@ -1,4 +1,12 @@
 <% breadcrumb :petitionsdata %>
-<p id="notice"><%= notice %></p>
 
-<h1>Petitions</h1>
+<p id="notice"><%= notice %></p>
+<div class="row">
+<div class="col-lg-6">
+	<%= render(:partial => "/petitions/data/petitions_count") %>
+</div>
+<div class="col-lg-6">
+	<%= render(:partial => "/petitions/data/petitions_support_spread") %>
+</div>
+</div>
+

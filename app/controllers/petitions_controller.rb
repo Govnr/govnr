@@ -7,17 +7,36 @@ class PetitionsController < ApplicationController
   # GET /petitions.json
   @petitions = Petition.all
 
-  def index
-    @filterrific = initialize_filterrific(
-      Petition,
-      params[:filterrific],
-      select_options: {
-        sorted_by: Petition.options_for_sorted_by
-      },
-      default_filter_params: { tagged_with: params[:tag]},
-    ) or return
-
-    @petitions = @filterrific.find.page(params[:page])
+  def index 
+   
+    @limit = params[:limit];
+    if @limit == nil
+      @limit = 10;
+    end
+    if params[:tag].present? 
+       @filterrific = initialize_filterrific(
+        Petition.tagged_with(params[:tag]),
+        params[:filterrific],
+        select_options: {
+          sorted_by: Petition.options_for_sorted_by
+        },
+        default_filter_params: {},
+      ) or return
+      @petitions =  Kaminari.paginate_array(@filterrific.find).page(params[:page]).per(@limit)
+      @tagged_label = ('Tagged with <span class="text-info">' + params[:tag] + "</span> #{view_context.link_to '&#xf00d;'.html_safe, petitions_path, :class=>'fa-text-block'}").html_safe
+    else
+      @filterrific = initialize_filterrific(
+        Petition,
+        params[:filterrific],
+        select_options: {
+          sorted_by: Petition.options_for_sorted_by
+        },
+        default_filter_params: {},
+      ) or return
+      @petitions =  Kaminari.paginate_array(@filterrific.find).page(params[:page]).per(@limit)
+      @tagged_label = 'Tagged with'
+    end 
+    # @petitions = @filterrific.find.page(params[:page]).per(10)
     # if params[:tag].present? 
     #   @petitions = Petition.tagged_with(params[:tag])
     # else 
@@ -29,6 +48,17 @@ class PetitionsController < ApplicationController
       format.html
       format.js
     end
+  end
+
+  def data
+  end
+
+  def petitions_count
+    render partial:'petitions/data/petitions_count'
+  end
+
+  def petitions_support_spread
+    render partial:'petitions/data/petitions_support_spread'
   end
 
   # def tagged
@@ -104,6 +134,7 @@ class PetitionsController < ApplicationController
   def support
     @petition = Petition.find(params['id'])
     @petition.liked_by current_user
+    @petition.create_activity key: 'petition.supported', owner: current_user
     flash[:notice] = "You supported this petition."
     respond_to do |format|
         format.js { }

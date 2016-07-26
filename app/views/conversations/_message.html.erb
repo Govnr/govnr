@@ -1,0 +1,20 @@
+    <% @conversation.receipts_for(current_user).each do |receipt| %>
+    <div class="media">
+      <% message = receipt.message %>
+      <div class="media-left">
+        <%= gravatar_for message.sender, 45, message.sender.name %>
+      </div>
+
+      <div class="media-body">
+        <div>
+          <span class="text-info">
+          <%= link_to message.sender.name, user_path(message.sender) %>
+          </span>
+           <span class="text-muted small"><i class="fa fa-clock-o fa-fw"></i><small><%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></small></span>
+        </div>
+        <div class="text">
+        <%= message.body %>
+        </div>
+      </div>
+    </div>
+    <% end %>

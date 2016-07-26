@@ -7,8 +7,8 @@ crumb :conversations do
 end
 
 crumb :conversation do |conversation|
-  link converation.id, conversation_path(conversation)
-  parent :messages
+  link conversation.subject.truncate(100), conversation_path(conversation)
+  parent :conversations
 end
 
 crumb :createconversation do |conversation|

@@ -1,11 +1,10 @@
-<% @req_votes = Petition.required_votes %>
-<div class="petition-supporter-bar"><span id="bar-<%= petition.id %>"><%= petition.votes_for.size %></span></div>
+<% @req_votes = petition.required_votes %>
+<div class="petition-supporter-bar-sm"><span id="bar-<%= petition.id %>"><%= petition.votes_for.size %></span></div>
 <div align="centre">
 </div>
 <script>
 var opt = {
 	numType:'absolute',
-  horLabelPos:'left',
  numMin:0,
  numMax:<%= @req_votes %>,
  horBarHeight:15,
@@ -41,5 +40,12 @@ var opt = {
  }
 
 };
- $('#bar-<%= petition.id %>').barIndicator(opt);
+ function bar () {
+   $('#bar-<%= petition.id %>').barIndicator(opt);
+   $('#bar-<%= petition.id %>').barIndicator('reanimateBar');
+}
+bar();
+ $(window).resize(function () {
+    bar();
+});
 </script> 

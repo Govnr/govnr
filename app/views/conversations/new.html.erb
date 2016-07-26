@@ -1,6 +1,6 @@
 <h1 class="page-header">New Conversation</h1>
 
-<%= form_tag messages_path, method: :post do %>
+<%= form_tag messages_path, remote: true, method: :post do %>
   <div class="form-group">
     <%= label_tag 'message[subject]', 'Subject' %>
     <%= text_field_tag 'message[subject]', nil, class: 'form-control', required: true %>

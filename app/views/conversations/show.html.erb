@@ -1,30 +1,37 @@
 <% breadcrumb :conversation, @conversation %>
 
-<h1 class="page-header">Conversation</h1>
-
-<p>Chatting with
-  <%= render 'conversations/participants', conversation: @conversation %>
-</p>
-
 <div class="panel panel-default">
-  <div class="panel-heading"><%= @conversation.subject %></div>
+  <div class="panel-heading">
+    <span class="pull-left"><%= render 'conversations/participants', conversation: @conversation, size: 20 %></span>
+    <span class="conversation-subject"><%= @conversation.subject %></span>
+  </div>
 
   <div class="panel-body">
-    <div class="messages">
-      <% @conversation.receipts_for(current_user).each do |receipt| %>
-        <div class="media">
-          <% message = receipt.message %>
-          <div class="media-left">
-            <%= gravatar_for message.sender, 45, message.sender.name %>
-          </div>
-
-          <div class="media-body">
-            <h6 class="media-heading"><%= message.sender.name %>
-              says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></h6>
-            <%= message.body %>
-          </div>
-        </div>
-      <% end %>
+    <div id="messages-container" class="messages" style="overflow:auto">
+  <%= render 'conversations/message', conversation: @conversation %>
     </div>
+    <script>
+      var out = document.getElementById("messages-container");
+      var c = 0;
+      var add = setInterval(function() {
+          // allow 1px inaccuracy by adding 1
+          var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
+          // scroll to bottom if isScrolledToBotto
+          if(isScrolledToBottom)
+            out.scrollTop = out.scrollHeight - out.clientHeight;
+      }, 500);
+    </script>
+  </div>
+
+  <div class="panel-footer">
+    <%= form_tag reply_conversation_path(@conversation), remote: true, method: :post do %>
+   <div class="input-group">
+    <%= text_field_tag 'body', nil, cols: 3, class: 'form-control input-sm', placeholder: 'Type something...', required: true %>
+    <span class="input-group-btn comment-send">
+    <%= submit_tag "Send", class: 'btn btn-primary btn-sm' %>
+  </span>
+  </div>
+<% end %>
   </div>
 </div>
+

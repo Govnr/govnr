@@ -1,0 +1,4 @@
+<% js = escape_javascript(
+ render 'conversations/message', conversation: @conversation
+) %>
+$("#messages-container").html("<%= js %>");

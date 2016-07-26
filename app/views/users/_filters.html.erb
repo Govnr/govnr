@@ -1,0 +1,48 @@
+
+
+<div class="row">
+<div class="col-md-10 col-slim">
+  <!-- <div class="col-md-1">
+    <span><small><strong><i class="fa fa-search fa-fw"></i> Filters</strong></small></span>
+  </div> -->
+  <%= form_for_filterrific @filterrific do |f| %>
+  <div class="col-md-3 col-slim">
+    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+    <small><strong>Search name</strong></small>
+    <%= f.text_field(
+      :search_query,
+      class: 'filterrific-periodically-observed form-control',
+      placeholder: 'Query'
+    ) %>
+  </div>
+  <div class="col-md-3 col-slim">
+  <small><strong>Sort by</strong></small>
+    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by],{}, class: "form-control") %>
+  </div>
+<!--   <div class="col-md-2">
+   
+  </div>
+  <div class="col-md-1">
+  <%# add an automated spinner to your form when the list is refreshed %>
+ 
+  </div> -->
+    <% end %>
+  </div>
+  <div class="col-md-1 col-slim">
+  <small><strong>Per page</strong></small>
+    <%= form_tag users_path, method: :get, id: 'limit_form', remote: true do %>
+             <%= select_tag :limit, options_for_select([5, 10, 15, 20], 
+          selected: params[:limit] || 10), class: 'form-control' %>
+          <% end %>
+  </div>
+  <div class="col-md-1 col-slim">
+    <div class="filter-reset">
+      <%= link_to(
+          'Reset filters',
+          reset_filterrific_url,
+        ) %>
+         <%= render_filterrific_spinner %>
+     </div>
+  </div>
+</div>
+   

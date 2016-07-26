@@ -1,0 +1,18 @@
+<div class="row row-listitem">
+    <div class="col-sm-6 listitem-title-box">
+       <div class="listitem-title">
+          <strong>
+           <%= link_to petition.name, petition %>
+           </strong>
+          <span>
+            [<small> <%= petition.tag_list %> </small>]
+          </span>
+       </div>
+    </div>
+    <div class="col-sm-4 col-slim">
+    <%= render(partial: 'petitions/milestones_sm', locals:{ petition: petition} ) %>
+    </div>
+    <div class="col-sm-2 col-slim">
+    <span><small><strong>Expires</strong></small><%= '00/00/00' %></span>
+    </div>
+  </div>

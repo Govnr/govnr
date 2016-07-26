@@ -7,7 +7,7 @@ crumb :petitions do
 end
 
 crumb :petitionsdata do
-  link "Data", petitions_data_path
+  link "Data", data_petitions_path
 end
 
 

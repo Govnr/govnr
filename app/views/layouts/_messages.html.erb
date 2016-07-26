@@ -1,4 +1,5 @@
 <% flash.each do |key, value| %>
+ <% unless key.to_s == 'timedout' %>
   <div class="alert alert-<%= key %>">
     <a href="#" data-dismiss="alert" class="close">×</a>
     <ul>
@@ -7,4 +8,5 @@
       </li>
     </ul>
   </div>
+ <% end %>
 <% end %>

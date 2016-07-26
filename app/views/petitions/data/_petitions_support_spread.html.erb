@@ -1,0 +1,50 @@
+<% @support_spread = Petition.support_spread %>
+<div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+        <i class="fa fa-pie-chart fa-fw"></i> Petition Support
+    </div>
+    <div class="panel-body panel-toolbar">
+        <canvas id="petitionSpreadChart" width="300px" height="300px"></canvas>
+		<script>
+		window.onload = function(){
+			var ctx = document.getElementById("petitionSpreadChart");
+		var petitionSpread = new Chart(ctx, {
+		    type: 'doughnut',
+		    data: {
+		        labels: ["0-30%", "30-70%", "70%+"], 
+		        position: 'bottom',
+		        datasets: [{
+		            label: '# of Votes',
+		            data: [<%= @support_spread[0] %>, <%= @support_spread[1] %>, <%= @support_spread[2] %>],
+		            backgroundColor: [
+		                "#ff6363",
+		                "#FFCE56",
+		                "#62BA46"
+		            ],
+		            hoverBackgroundColor: [
+		                "#fe8383",
+		                "#ffd556",
+		                "#6bcd4c"
+		            ]
+		        }]
+		    },
+		    options: {
+		    	 title: {
+		            display: true,
+		            text: 'Petition Spread'
+		        },
+		        maintainAspectRatio: false,
+		        responsive: true,
+		         legend: {
+		            display: true,
+		            position: 'bottom'
+		        }
+		    },
+		    animation:{
+		        animateScale:true
+		    }
+		});
+		}
+		</script>
+    </div>
+</div>

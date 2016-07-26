@@ -1,8 +1,4 @@
 <% breadcrumb :petitions %>
-<p id="notice"><%= notice %></p>
-
-<h1>Petitions</h1>
-
  <div class="row">
  <div class="col-lg-12">
  <div class="panel panel-default panel-toolbar">
@@ -36,12 +32,17 @@
 
 
 
-<div id="filterrific_results">
+<div id="page_results">
 
 <%= render(partial: 'petitions/list', locals: { petitions: @petitions }) %>
+<script type="text/javascript" >
 
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });
+
+</script>
 </div>
-
-<br>
-
-<%= link_to 'New Petition', new_petition_path %>

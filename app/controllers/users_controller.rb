@@ -3,15 +3,55 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   # GET /users
   # GET /users.json
+  @users = User.all
+
   def index
-    @users = User.all
+    @limit = params[:limit];
+    if @limit == nil
+      @limit = 10;
+    end
+   @filterrific = initialize_filterrific(
+      User,
+      params[:filterrific],
+      select_options: {
+        sorted_by: User.options_for_sorted_by
+      },
+      default_filter_params: {},
+    ) or return
+    @users =  Kaminari.paginate_array(@filterrific.find).page(params[:page]).per(@limit)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     @activities = PublicActivity::Activity.order("created_at desc")
-          .where(owner_id: current_user.id, owner_type: "User")
+          .where(owner_type: "User", owner_id: @user.id)
+  end
+
+  def following
+    @limit = params[:limit];
+    if @limit == nil
+      @limit = 10;
+    end
+    @title = "Following"
+    @user  = User.find(params[:id])
+    @filterrific = initialize_filterrific(
+      @user.following,
+      params[:filterrific],
+      select_options: {
+        sorted_by: User.options_for_sorted_by
+      },
+      default_filter_params: {},
+    ) or return
+    @users =  Kaminari.paginate_array(@filterrific.find).page(params[:page]).per(@limit)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /users/new

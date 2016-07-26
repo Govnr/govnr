@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+      <%= link_to dashboard_path(feed: 'comments'), remote: true do %>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-comments fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @comment_activities.size %></div>
+                        <div>Comments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-bullhorn fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @petition_activities.size %></div>
+                        <div>Active Petitions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-university fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">4</div>
+                        <div>Active Motions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-balance-scale fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">2</div>
+                        <div>Active Votes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

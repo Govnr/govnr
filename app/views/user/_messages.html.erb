@@ -3,7 +3,15 @@
         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-messages">
+    
+    <%= render partial: 'conversations/conversation_small', collection:get_recent_conversations, cached: true %>
+    <li class="divider"></li>
         <li>
+        <%= link_to conversations_path do %>
+              <i class="fa fa-envelope fa-fw"></i> Messages
+        <% end %>
+        </li>
+        <!-- <li>
             <a href="#">
                 <div>
                     <strong>John Smith</strong>
@@ -43,7 +51,7 @@
         <i class="fa fa-angle-right"></i>
          <br />
                 
-        </li>
+        </li> -->
     </ul>
     <!-- /.dropdown-messages -->
 </li>

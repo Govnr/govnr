@@ -1,7 +1,9 @@
-added a new petition
+<% @panel_class = 'panel-default' %>
+<% @panel_icon = 'fa-bullhorn' %>
+<% @past_participle = 'created'  %>
+<% @definite_article = 'a'  %>
+<% @object = 'petition'  %>
+<% @body_content = activity.trackable.content if activity.trackable.present? %>
+<% @truncate_length = 250 %>
 
-<% if activity.trackable %>
-  <%= link_to activity.trackable.title, activity.trackable %>
-<% else %>
-  which has since been removed
-<% end %>
+<%= activity_for activity %>

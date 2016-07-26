@@ -1,7 +1,10 @@
-created a
+<% @panel_class = 'panel-default' %>
+<% @panel_icon = 'fa-comment' %>
+<% @past_participle = 'commented on'  %>
+<% @definite_article = 'a'  %>
+<% @object = 'resource'  %>
+<% @body_content = activity.trackable.content if activity.trackable %>
+<% @truncate_length = 250 #(set to negative number to bypass truncation) %>
 
-<% if activity.trackable %>
-  <%= link_to 'comment',  [activity.trackable.commentable, activity.trackable] %>
-<% else %>
-  which has since been removed
-<% end %>
+<%= activity_for activity %>
+

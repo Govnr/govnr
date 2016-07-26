@@ -1,21 +1,12 @@
 <%# app/views/petitions/_list.html.erb %>
 <% @petitions.each do |petition| %>
-  <div class="row row-listitem">
-    <div class="col-sm-6">
-       <div class="listitem-title">
-       <h4>
-           <%= link_to petition.name, petition %>
-           </h4>
-       </div>
-    </div>
-     <div class="col-sm-2">
-       <div class="listitem-title">
-          <small> <%= petition.tag_list %> </small>
-       </div>
-    </div>
-    <div class="col-sm-4">
-    <%= render(partial: 'petitions/milestones_sm', locals:{ petition: petition} ) %>
-    </div>
-    </div>
+  <%= render petition %>
   <div class="row-spacer"></div>
 <% end %>
+
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+    <%= paginate @petitions, :remote => true %>
+  </div>
+ </div>

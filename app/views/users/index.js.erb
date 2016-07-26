@@ -1,0 +1,10 @@
+<% js = escape_javascript(
+  render(partial: 'users/list', locals: { users: @users })
+) %>
+$("#page_results").html("<%= js %>");
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });

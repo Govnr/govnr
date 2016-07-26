@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+<div class="panel-heading">
+	<div class="pull-left icon-space">
+  <i class="fa fa-newspaper-o fa-fw"></i>
+  Global activity
+	  </div>
+  <div class="pull-left">
+    <ul class="nav nav-pills conversations-nav">
+    </ul>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+  <div class="container-fluid timeline-container">
+    <div class="timeline">
+       <%= render partial: 'activity', collection: @global_activities, as: @activities, cached: true %>
+    </div>
+  </div>
+</div>

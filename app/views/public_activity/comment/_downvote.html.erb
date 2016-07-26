@@ -1,7 +1,9 @@
-downvoted a comment
+<% @panel_class = 'panel-default' %>
+<% @panel_icon = 'fa-comment' %>
+<% @past_participle = 'downvoted'  %>
+<% @definite_article = 'a'  %>
+<% @object = 'comment'  %>
+<% @body_content = nil %>
+<% @truncate_length = -1 %>
 
-<% if activity.trackable %>
-  <%= link_to activity.trackable.name, activity.trackable %>
-<% else %>
-  which has since been removed
-<% end %>
+<%= activity_for activity %>

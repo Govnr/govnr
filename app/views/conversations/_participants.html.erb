@@ -1,5 +1,6 @@
+<% size ||= 30 %>
 <% conversation.participants.each do |participant| %>
   <% unless participant == current_user %>
-    <%= gravatar_for participant %>
+    <%= gravatar_for(participant,size) %>
   <% end %>
 <% end %>

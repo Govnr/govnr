@@ -1,0 +1,72 @@
+.timeline {
+    position: relative;
+    padding: 21px 0px 10px;
+    margin-top: 4px;
+    margin-bottom: 30px;
+}
+
+.timeline > .panel-default > .panel-heading 
+{
+	color: #888;
+}
+
+.timeline > .panel-primary > .panel-heading 
+{
+	color: #F4F4F4;
+}
+.timeline > .panel-primary > .panel-heading > a { color: #F1F1F1; }
+.timeline > .panel-primary > .panel-heading > a:hover  { color: #fff; }
+.timeline > .panel-primary > .panel-heading > span > a { color: #F1F1F1; }
+.timeline > .panel-primary > .panel-heading > span > a:hover { color: #fff; }
+.timeline > .panel > .panel-body { color: #111; }
+
+.timeline > .panel > .panel-footer
+{
+	color: #777;
+}
+
+.timeline > .panel
+{
+	background-color: #fff;
+}
+
+.timeline .line {
+    position: absolute;
+    width: 4px;
+    display: block;
+    background: #F1F1F1;
+    top: 0px;
+    bottom: 0px;
+    margin-left: 50%;
+}
+
+.timeline .separator {
+    border-top: 1px solid currentColor;
+    padding: 5px;
+    padding-left: 40px;
+    font-style: italic;
+    font-size: .9em;
+    margin-left: 30px;
+}
+
+.timeline .line::before { top: -4px; }
+.timeline .line::after { bottom: -4px; }
+.timeline .line::before,
+.timeline .line::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    display: block;
+    border-radius: 50%;
+    background: F1F1F1;
+}
+
+.timeline .panel {
+    position: relative;
+    clear: both;
+}
+
+
+

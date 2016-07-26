@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'search' => 'search#search', :as => :search
+
+  get 'admin/configuration'
+
   wiki_root '/wiki'
-
-  devise_for :admin_users, ActiveAdmin::Devise.config
-
-  ActiveAdmin.routes(self)
 
   devise_for :users, :path => '', :path_names => { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register' },
     :controllers => { registrations: 'registrations' }
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   
   authenticated :user do
-    root :to => 'pages#dashboard', as: :authenticated_root
+    root :to => 'dashboard#index', as: :authenticated_root
   end
   
   # get 'login' => 'devise/sessions#new'
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       post :signin
+      get :following, :followers
     end
     collection do
       post :signout
@@ -44,13 +45,31 @@ Rails.application.routes.draw do
   end
 
   resources :petitions do
-     resources :comments
+    get 'data'
+    resources :comments
+    collection do
+      get :data
+    end
   end
+
   # get "petitions/support/", :to => 'petitions#support', :as => :petition_support
   post 'petitions/support', :to => 'petitions#support', :as => :petition_support_post
-  get 'data/petitions', :to => 'data#petitions', :as => 'data_petitions'
+  # get 'data/petitions/', :to => 'data#petitions', :as => 'data_petitions'
+  get 'petitions/tags/:tag', to: 'petitions#index', as: :tag
+
+  resources :relationships,       only: [:create, :destroy]
+
   resources :messages, only: [:new, :create]
-  resources :conversations, only: [:index, :show, :destroy]
+  resources :conversations, only: [:index, :show, :destroy] do
+    member do
+      post :reply
+      post :restore
+      post :mark_as_read
+    end
+    collection do
+      delete :empty_trash
+    end
+  end
 
   # resources :conversations, :controller => "user_conversations" do
   #   resources :messages
@@ -60,8 +79,9 @@ Rails.application.routes.draw do
   #   end
   # end
 
- get '/dashboard' => 'pages#dashboard'
- get '/' => 'pages#index'
+ get '/dashboard' => 'dashboard#index'
+ # get '/following' => 'users#following'
+ get '/' => 'dashboard#public'
 
 # match "signup", :to => "users#new"
 # match "login", :to => "sessions#login"
@@ -78,8 +98,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   
   root 'pages#index'
-
-  get 'tags/:tag', to: 'petitions#index', as: :tag
 
   get ':controller(/:action(/:id))(.:format)'
 

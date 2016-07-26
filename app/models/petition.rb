@@ -1,19 +1,48 @@
 class Petition < ActiveRecord::Base
-	belongs_to :user
 	has_many :comments, :as => :commentable, :dependent => :destroy
-	has_many :users
 	acts_as_taggable
 	acts_as_votable
 	include PublicActivity::Model
-  	tracked owner: Proc.new{ |controller, model| controller.current_user }
+  	tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user||nil }
 
-	def self.required_votes
+ 	searchable do
+	    text :name, :content
+	    # text :comments do
+	    #   comments.map { |comment| comment.content }
+	    # end
+	    time    :created_at
+	    time    :expires_at
+
+	    # string  :sort_title do
+	    #   title.downcase.gsub(/^(an?|the)/, '')
+	    # end
+	end
+
+	def required_votes
 		@votes = (User.all.size / 100) * 5
 		unless @votes < 1 
 			return @votes
 		else 
 			return 10
 		end
+	end
+
+	def self.support_spread
+	    @c1 = 0
+	    @c2 = 0
+	    @c3 = 0
+	    Petition.all.each do |petition|
+	      @votes_per = ((petition.votes_for.size/petition.required_votes) * 100)
+	      case @votes_per
+	        when 0..30
+	         @c1+=1
+	        when 30..70
+	         @c2+=1
+	        when 70..100
+	         @c3+=1
+	      end
+	    end
+	    return [@c1,@c2,@c3]
 	end
 
 	filterrific(
@@ -25,6 +54,11 @@ class Petition < ActiveRecord::Base
 	    :with_created_at_gte
 	  ]
 	)
+
+	scope :recent_day, -> { where("created_at > ?", Time.now-1.days) }
+	scope :recent_week, -> { where("created_at > ?", Time.now-7.days) }
+	scope :recent_month, -> { where("created_at > ?", Time.now-1.month) }
+	scope :recent_year, -> { where("created_at > ?", Time.now-1.years) }
 
 	scope :search_query, lambda { |query|
 	  # Searches the students table on the 'first_name' and 'last_name' columns.
@@ -45,10 +79,10 @@ class Petition < ActiveRecord::Base
 	  # configure number of OR conditions for provision
 	  # of interpolation arguments. Adjust this if you
 	  # change the number of OR conditions.
-	  num_or_conds = 2
+	  num_or_conds = 1
 	  where(
 	    terms.map { |term|
-	      "(LOWER(petitions.name) LIKE ? OR  LOWER(petitions.content) LIKE ?)"
+	      "(LOWER(petitions.name) LIKE ?)"
 	    }.join(' AND '),
 	    *terms.map { |e| [e] * num_or_conds }.flatten
 	  )

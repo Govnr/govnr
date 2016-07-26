@@ -1,0 +1,25 @@
+<%# app/views/users/_list.html.erb %>
+<% @users.each do |user| %>
+  <div class="row row-listitem">
+    <div class="col-sm-8 listitem-title-box">
+       <div class="listitem-title">
+          <span>
+            <%=  gravatar_for user %>
+          </span>
+          <strong>
+           <%= link_to user.name, user %>
+           </strong>
+       </div>
+    </div>
+    <div class="col-sm-4 col-slim">
+    </div>
+    </div>
+  <div class="row-spacer"></div>
+<% end %>
+
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+    <%= paginate @users, :remote => true %>
+  </div>
+ </div>

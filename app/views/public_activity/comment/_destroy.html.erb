@@ -1,0 +1,9 @@
+<% @panel_class = 'panel-danger' %>
+<% @panel_icon = 'fa-comment' %>
+<% @past_participle = 'deleted'  %>
+<% @definite_article = 'a'  %>
+<% @object = 'comment'  %>
+<% @body_content = activity.trackable.content if activity.trackable %>
+<% @truncate_length = 250 #(set to negative number to bypass truncation) %>
+
+<%= activity_for activity %>

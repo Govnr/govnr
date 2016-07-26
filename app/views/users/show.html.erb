@@ -1,38 +1,18 @@
+<% breadcrumb :user, @user %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+ <%= render partial: "users/user_bar" %>
+ 
+<div class="container-fluid timeline-container">
+<div class="timeline">
+  <div class="line"></div>
+    <% @activities.each do |activity| %>
+      <%= render_activity activity %>
+    <% end %>
 
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>Postcode:</strong>
-  <%= @user.postcode %>
-</p>
-
-<p>
-  <strong>Roles:</strong>
-  <span>
-  <%= render partial: "users/user_roles" %>
-  </span>
-</p>
-
-<%= render_activities(@activities, layout: :activity) %>
+  </div>
+</div>
 
 <% if @user.id == current_user.id %>
 <%= link_to 'Edit', edit_user_path(@user) %> |

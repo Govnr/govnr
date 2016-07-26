@@ -1,0 +1,4 @@
+<% js = escape_javascript(
+  render(partial: 'dashboard/activity_feed')
+) %>
+$("#activity_feed").html("<%= js %>");

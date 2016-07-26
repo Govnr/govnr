@@ -1,23 +1,4 @@
 GIT
-  remote: git://github.com/activeadmin/activeadmin.git
-  revision: 4a6bca440cf6f3e370478790f13ec58c0f80e223
-  specs:
-    activeadmin (1.0.0.pre4)
-      arbre (~> 1.0, >= 1.0.2)
-      bourbon
-      coffee-rails
-      formtastic (~> 3.1)
-      formtastic_i18n
-      inherited_resources (~> 1.6)
-      jquery-rails
-      jquery-ui-rails
-      kaminari (~> 0.15)
-      rails (>= 3.2, < 5.1)
-      ransack (~> 1.3)
-      sass-rails
-      sprockets (< 4)
-
-GIT
   remote: git://github.com/alno/irwi.git
   revision: 2abd0f2b034c8137c829775f270106429be1d252
   specs:
@@ -44,6 +25,8 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    actionpack-action_caching (1.1.1)
+      actionpack (>= 4.0.0, < 5.0)
     actionview (4.2.0)
       activesupport (= 4.2.0)
       builder (~> 3.1)
@@ -82,8 +65,6 @@ GEM
       selectize-rails (~> 0.6)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
-    arbre (1.1.1)
-      activesupport (>= 3.0.0)
     arel (6.0.3)
     autoprefixer-rails (6.3.7)
       execjs
@@ -108,6 +89,7 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    chartkick (2.0.0)
     chosen-rails (1.5.2)
       coffee-rails (>= 3.2)
       railties (>= 3.0)
@@ -143,27 +125,21 @@ GEM
     execjs (2.7.0)
     filterrific (2.0.5)
       rails (>= 3.1.0)
+    font-awesome-rails (4.6.3.1)
+      railties (>= 3.2, < 5.1)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
-    formtastic (3.1.4)
-      actionpack (>= 3.2.13)
-    formtastic_i18n (0.6.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     gravatar_image_tag (1.2.0)
     gretel (3.0.8)
       rails (>= 3.2.0)
-    has_scope (0.6.0)
-      actionpack (>= 3.2, < 5)
-      activesupport (>= 3.2, < 5)
+    groupdate (3.0.1)
+      activesupport (>= 3)
     hashie (3.4.4)
     high_voltage (3.0.0)
+    highline (1.7.8)
     i18n (0.7.0)
-    inherited_resources (1.6.0)
-      actionpack (>= 3.2, < 5)
-      has_scope (~> 0.6.0.rc)
-      railties (>= 3.2, < 5)
-      responders
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -179,8 +155,6 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
-    jquery-ui-rails (5.0.5)
-      railties (>= 3.2.16)
     json (1.8.3)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
@@ -221,6 +195,7 @@ GEM
     omniauth (1.3.1)
       hashie (>= 1.2, < 4)
       rack (>= 1.0, < 3)
+    options (2.3.2)
     orm_adapter (0.5.0)
     paperclip (5.0.0)
       activemodel (>= 4.2.0)
@@ -230,10 +205,10 @@ GEM
       mimemagic (~> 0.3.0)
     pg (0.18.4)
     pkg-config (1.1.7)
-    polyamorous (1.3.1)
-      activerecord (>= 3.0)
-    protected_attributes (1.1.3)
-      activemodel (>= 4.0.1, < 5.0)
+    pr_geohash (1.0.0)
+    progress_bar (1.0.5)
+      highline (~> 1.6)
+      options (~> 2.3.0)
     public_activity (1.5.0)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0)
@@ -273,17 +248,13 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.2.2)
-    ransack (1.7.0)
-      actionpack (>= 3.0)
-      activerecord (>= 3.0)
-      activesupport (>= 3.0)
-      i18n
-      polyamorous (~> 1.2)
     rdoc (4.2.2)
       json (~> 1.4)
     redcarpet (3.3.4)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
+    rsolr (1.1.1)
+      builder (>= 2.1.2)
     sass (3.4.22)
     sass-rails (5.0.5)
       railties (>= 4.0.0, < 6)
@@ -317,6 +288,14 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.11)
+    sunspot (2.2.5)
+      pr_geohash (~> 1.0)
+      rsolr (~> 1.1.1)
+    sunspot_rails (2.2.5)
+      nokogiri
+      rails (>= 3)
+      sunspot (= 2.2.5)
+    sunspot_solr (2.2.5)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -346,7 +325,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeadmin!
+  actionpack-action_caching
   acts-as-taggable-on
   acts_as_votable
   administrate
@@ -358,13 +337,16 @@ DEPENDENCIES
   bourbon
   byebug
   cancancan (~> 1.10)
+  chartkick
   chosen-rails
   closure_tree
   coffee-rails
   devise
   filterrific
+  font-awesome-rails
   gravatar_image_tag
   gretel
+  groupdate
   high_voltage
   irwi!
   jbuilder (~> 2.0)
@@ -378,7 +360,7 @@ DEPENDENCIES
   omniauth
   paperclip
   pg
-  protected_attributes
+  progress_bar
   public_activity
   pundit
   rails (= 4.2.0)
@@ -388,6 +370,8 @@ DEPENDENCIES
   seed_dump
   simple_form
   spring
+  sunspot_rails
+  sunspot_solr
   turbolinks
   uglifier
   web-console

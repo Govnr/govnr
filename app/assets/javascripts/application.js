@@ -27,6 +27,8 @@
 //= require jquery.easing.compatibility
 //= require jquery-barIndicator
 //= require filterrific/filterrific-jquery
+//= require chart/Chart.bundle.min
+//= require chartkick
 
 
 
