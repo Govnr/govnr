@@ -1,9 +1,16 @@
-<h4><%= @petition.votes_for.size %> people have supported this petition so far.</h4>
+<% @expired = @petition.expired %>
+<% @supporter_text = "people have supported this petition so far." %>
+<% if @expired %>
+  <% @supporter_text = "people supported this petition." %>
+<% end %>
+<h4><%= @petition.votes_for.size %> <%= @supporter_text %></h4>
 <% if current_user.voted_as_when_voted_for @petition %>
 	<span class="text-muted">Including you.</span>
 <% else %>
-<br />
-<button class="btn btn-success" data-toggle="modal" data-target="#petition-support-modal">
-<i class="icon-plus icon-white"></i> Support this petition
-</button>
+	<% unless @expired %>
+		<br />
+		<button class="btn btn-success" data-toggle="modal" data-target="#petition-support-modal">
+		<i class="icon-plus icon-white"></i> Support this petition
+		</button>
+	<% end %>
 <% end %>

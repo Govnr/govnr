@@ -1,0 +1,25 @@
+
+<p>
+<strong><small>
+Votes for: <%= motion.get_upvotes.size %> (<%= motion.voteyespercent %>%)<br />
+Votes against: <%= motion.get_downvotes.size %> (<%= motion.votenopercent %>%)
+</small></strong>
+</p>
+<p>
+<small>
+A majority of <%= Settings.motions.required_majority_percent %>% was required to carry the motion.
+</small>
+</p>
+<p>
+<strong>
+<% if motion.voteyespercent >= Settings.motions.required_majority_percent %>
+  <% if motion.draft.present? %>
+  <% link_to 'The motion was passed to a draft statute.', motion.draft %>
+  <% else %>
+  The motion will be passed to a draft statute.
+  <% end %>
+<% else %>
+	 The motion was not passed to a draft statute.
+<% end %>
+</strong>
+</p>

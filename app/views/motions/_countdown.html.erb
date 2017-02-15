@@ -1,0 +1,27 @@
+<i class="fa fa-clock-o fa-fw"></i>
+<% unless (motion.voting_ends_at.present?) %>
+	<% motion.voting_ends_at = 1.day.ago %>
+<% end %>
+<% if motion.voting_ends_at.past? %>
+	<% @countdown_active = false %>
+<small><strong>Voting ended. </strong></small>
+<% elsif motion.voting_starts_at.future? %>
+	<% @countdown_active = true %>
+<small><strong>Voting starts in: </strong></small>
+	<% @ticks = motion.voting_starts_at.to_f * 1000 %>
+<% elsif motion.voting_starts_at.past? && motion.voting_ends_at.future?%>
+	<% @countdown_active = true %>
+<small><strong>Voting ends in: </strong></small>
+	<% @ticks = motion.voting_ends_at.to_f * 1000 %>
+<% end %>
+<% if @countdown_active %>
+<span id="countdown-container-<%= motion.id %>"></span>
+<script type="text/javascript">
+   $("#countdown-container-<%= motion.id %>").countdown( new Date(<%= @ticks %>), function(event) {
+     $(this).text(
+       event.strftime('%D days %H:%M:%S')
+     );
+   })<% if reload_on_finish %>.on('finish.countdown', function() {
+           window.location.reload(true);})<% end %>;
+</script>
+<% end %>

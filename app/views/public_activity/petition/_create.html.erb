@@ -1,9 +1,12 @@
 <% @panel_class = 'panel-default' %>
 <% @panel_icon = 'fa-bullhorn' %>
 <% @past_participle = 'created'  %>
-<% @definite_article = 'a'  %>
+<% @definite_article = 'the'  %>
 <% @object = 'petition'  %>
 <% @body_content = activity.trackable.content if activity.trackable.present? %>
 <% @truncate_length = 250 %>
-
-<%= activity_for activity %>
+<% if params[:small] == true %>
+	<%= activity_small_for activity %>
+<% else %>
+	<%= activity_for activity %>
+<% end %>

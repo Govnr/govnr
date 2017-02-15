@@ -1,5 +1,6 @@
 crumb :search do
   link 'Search', search_path
+  parent :group
 end
 
 crumb :searchresults do

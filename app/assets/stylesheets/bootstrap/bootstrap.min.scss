@@ -1105,11 +1105,11 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #555;
   text-decoration: none;
   &:focus,
   &:hover {
-    color: #23527c;
+    color: #222;
     text-decoration: underline;
   }
   &:focus {
@@ -1472,7 +1472,7 @@ mark {
   color: #777;
 }
 .text-primary {
-  color: #337ab7;
+  color: #555;
 }
 a.text-primary {
   &:focus,
@@ -1504,7 +1504,7 @@ a.text-info {
 a.text-warning {
   &:focus,
   &:hover {
-    color: #66512c;
+    color: #55512c;
   }
 }
 .text-danger {
@@ -3914,7 +3914,7 @@ fieldset[disabled] .btn-primary {
   }
 }
 .btn-primary .badge {
-  color: #337ab7;
+  color: #555;
   background-color: #fff;
 }
 .btn-success {
@@ -4331,7 +4331,7 @@ fieldset[disabled] .btn-danger {
 }
 .btn-link {
   font-weight: 400;
-  color: #337ab7;
+  color: #555;
   border-radius: 0;
   background-color: transparent;
   -webkit-box-shadow: none;
@@ -4358,7 +4358,7 @@ fieldset[disabled] .btn-link {
   }
   &:focus,
   &:hover {
-    color: #23527c;
+    color: #222;
     text-decoration: underline;
     background-color: transparent;
   }
@@ -5623,8 +5623,8 @@ textarea.input-group-sm > {
     float: left !important;
   }
   .navbar-right {
-    float: right !important;
-    margin-right: -15px;
+      float: right !important;
+      margin-right: -15px;
     ~ .navbar-right {
       margin-right: 0;
     }
@@ -5916,7 +5916,7 @@ fieldset[disabled] .navbar-inverse .btn-link {
           padding: 6px 12px;
           margin-left: -1px;
           line-height: 1.42857143;
-          color: #337ab7;
+          color: #555;
           text-decoration: none;
           background-color: #fff;
           border: 1px solid #ddd;
@@ -5942,7 +5942,7 @@ fieldset[disabled] .navbar-inverse .btn-link {
           &:focus,
           &:hover {
             z-index: 3;
-            color: #23527c;
+            color: #222;
             background-color: #eee;
             border-color: #ddd;
           }
@@ -5951,7 +5951,7 @@ fieldset[disabled] .navbar-inverse .btn-link {
           &:focus,
           &:hover {
             z-index: 3;
-            color: #23527c;
+            color: #222;
             background-color: #eee;
             border-color: #ddd;
           }
@@ -6241,7 +6241,7 @@ a.badge {
 }
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #337ab7;
+  color: #555;
   background-color: #fff;
 }
 .list-group-item > .badge {
@@ -6387,7 +6387,7 @@ a.thumbnail {
     border-top-color: #f7e1b5;
   }
   .alert-link {
-    color: #66512c;
+    color: #55512c;
   }
 }
 .alert-danger {
@@ -7325,7 +7325,7 @@ button.list-group-item-danger.active {
         border-top-color: #337ab7;
       }
       .badge {
-        color: #337ab7;
+        color: #555;
         background-color: #fff;
       }
     }

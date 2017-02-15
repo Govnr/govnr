@@ -1,5 +1,6 @@
 crumb :users do
   link "Users", users_path
+  parent :group
 end
 
 crumb :user do |user|

@@ -1,16 +1,11 @@
 <% breadcrumb :user, @user %>
 
-<p id="notice"><%= notice %></p>
-
- <%= render partial: "users/user_bar" %>
+<%= render partial: "users/header" %>
  
 <div class="container-fluid timeline-container">
 <div class="timeline">
   <div class="line"></div>
-    <% @activities.each do |activity| %>
-      <%= render_activity activity %>
-    <% end %>
-
+        <%= render partial: 'groups/activity/activity', collection: @activities, locals: {small:false}, cached: true %>
   </div>
 </div>
 

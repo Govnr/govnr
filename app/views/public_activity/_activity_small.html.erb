@@ -1,0 +1,50 @@
+<% @link = activity_path %>
+<% @activity_group = nil %>
+<% if activity.trackable %>
+	<% @link = activity.trackable %>
+<% end %>
+<% if defined? activity.trackable.commentable %>
+	<% @link = [activity.trackable.commentable, activity.trackable] %>
+	<% if defined? activity.trackable.commentable.group %>
+		<% @activity_group = activity.trackable.commentable.group  %>
+		<% @link = [activity.trackable.commentable.group,activity.trackable.commentable] %>
+	<% end %>
+<% else %>
+	<% if defined? activity.trackable.group %>
+		<% @activity_group = activity.trackable.group %>
+		<% @link = [activity.trackable.group,activity.trackable] %>
+	<% end %>
+<% end %>
+<% if @activity_group.present? %>
+ <%= link_to @link do %>
+ 	<% if activity.trackable && @activity_group %>
+ 		<div class="pull-left"><%= group_avatar(@activity_group, class: 'icon-space', style: 'width:30px;height:30px;margin-top:5px;') %></div>
+ 	<% end %>
+	<small class="text-muted"><i class="fa fa-clock-o"></i> 
+	<% if activity.created_at > 1.day.ago %>
+	  <% @tf = "%-d %B, %H:%M" %>
+	<% else %>
+	  <% @tf = "%-d %B, %H:%M" %>
+	<% end %>
+	<%= activity.created_at.strftime(@tf) %>
+	</small>
+	<i class="fa <%= @panel_icon %>"></i> 
+ 
+     <%= activity.owner.name if activity.owner %>
+
+	<% if activity.trackable %>
+		<% if defined? activity.trackable.commentable %>
+		  <% if activity.trackable.commentable.present? %>
+		  <%= @past_participle %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> <%= activity.trackable.commentable.name %>'
+		  <% else %>
+		     <%= @past_participle %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> which has now been removed.
+		  <% end %>
+		<% else %>
+		 <%= @past_participle %> <%= @definite_article %> <%= @object %> '<%= activity.trackable.name %>'
+		<% end %>
+	<% else %>
+	  <%= @past_participle %> <%= @definite_article %> <%= @object %> which has now been removed.
+	<% end %>
+	<div class="clearfix"></div>
+ <% end %>
+<% end %>

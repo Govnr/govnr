@@ -3,8 +3,7 @@
         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-messages">
-    
-    <%= render partial: 'conversations/conversation_small', collection:get_recent_conversations, cached: true %>
+    <%= render partial:'user/recent_messages' %>
     <li class="divider"></li>
         <li>
         <%= link_to conversations_path do %>

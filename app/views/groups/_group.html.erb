@@ -1,0 +1,17 @@
+<div class="row row-listitem group-listitem">
+  <div class="col-sm-12 listitem-title-box">
+    <div class="listitem-title">
+      <strong>
+       <%= link_to group_path(id: group.slug) do %>
+        <%= group_avatar(group, class: ' icon-space', style: 'width:24;height:24px;') %>
+        <%= group.name %>
+       <% end %>
+       </strong>
+    </div>
+    <div class="pull-right">
+       <%= link_to join_group_path(group_id: group.slug), class: 'btn btn-default btn-xs'  do %>
+            <i class="fa fa-user-plus fa-fw"></i> Join Group
+          <% end %>
+        </div>
+  </div>
+</div>

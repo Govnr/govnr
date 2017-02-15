@@ -1,0 +1,27 @@
+<%= simple_form_for(@group) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <strong>Name</strong>
+    <p class="small text-muted input-guide">
+	Please enter the name of your group. This name will be used to generate the id for the group, and so must be unique. There is a limit of 50 characters.
+	</p>
+	<%= f.input :name, label: false, class: 'form-control' %>
+
+	<strong>Description</strong>
+    <p class="small text-muted input-guide">
+	Write a short description of the group, to help people understand what the group is for. There is a 400 character limit.
+	</p>
+	<%= f.input :content, label: false, class: 'form-control' %>
+
+	<strong>Private</strong>
+    <p class="small text-muted input-guide">
+	Do you want to make this group private? This means that people won't be able to find the group, but will have to be invited to join.
+	</p>
+	<%= f.input :private, class: 'form-control' %>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

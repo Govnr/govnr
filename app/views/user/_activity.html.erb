@@ -1,0 +1,13 @@
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-bell-o fa-fw"></i>  <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-alerts">
+    <%= render partial: 'user/activity_row', collection: get_recent_activity, cached: true %>
+    
+
+        <%#= render partial: 'public_activity/activity_small', collection: get_recent_activity, locals: {small: true} %>
+    </ul>
+    <!-- /.dropdown-alerts -->
+</li>
+<!-- /.dropdown -->

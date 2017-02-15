@@ -1,0 +1,53 @@
+<%= wiki_page_style %>
+<% breadcrumb :draft, @draft %>
+<h1><%=wt 'Editing wiki page' %></h1>
+
+ <div class="panel panel-default">
+  <div class="panel-heading clearfix">
+  <div class="pull-left"> <i class="fa fa-book fa-fw"></i></div>
+ 
+      <%= render partial:'draft_page_info'%>
+     
+      <div class="pull-right">
+          <div>
+          <%= render partial:'draft_page_actions'%>
+          </div>
+      </div>
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">
+<% if params[:preview] %>
+<div class="wiki_content">
+  <%= @draft.content %>
+</div>
+<% end %>
+
+<%= drafts_form do |f| %>
+  <%= f.hidden_field :previous_version_number, :value => f.object.last_version_number %>
+  <%= hidden_field_tag :page, draft_path(@draft) %>
+
+  <p><%=wt 'Title:' %><br /><%= f.text_field :name %></p>
+
+  <%# If our 'content' contains newlines, Erubis will indent them (to make the
+      produced HTML look nicer). However those indenting spaces *will* appear
+      in the textarea in the user's browser and will get POSTed by the browser
+      when submitting the form and thus would get written to the wiki content
+      into the database.  The gsub's below replace the linebreaks ('\r\n')
+      with UTF8 linefeeds (same way HAML solves this problem), which are
+      ignored by Erubis and should be correctly displayed as linebreaks by
+      modern browsers. %>
+  <p><%=wt "Content: #{link_to('(Markdown', 'https://en.support.wordpress.com/markdown-quick-reference/', target: '_blank')}".html_safe %> allowed)<br /><%= f.text_area(:content) %> </p>
+  <%#<p><%#=wt 'Content:' %><br /><%#= f.text_area(:content, :value => f.object.content.gsub("\n", '&#x000A;').gsub("\r",'')).html_safe %#></p>%>
+
+  <p><%#=wt 'Comment on this change (optional):' %><br /><%#= f.text_field :comment %></p>
+  <input type="submit" name="save" value="<%=wt 'Save page' %>" class="submit" />
+  <input type="submit" name="preview" value="<%=wt 'Preview' %>" class="submit" />
+  <input type="submit" name="cancel" value="<%=wt 'Cancel' %>" class="submit" />
+<% end %>
+<%#= wiki_page_attachments(@draft) %>
+            </div>
+            <!-- /.panel-body -->
+
+        </div>
+        <!-- /.panel -->
+

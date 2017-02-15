@@ -1,0 +1,6 @@
+
+ <%= link_to( wt( 'History' ), draft_history_path(@draft), :class => "btn btn-default btn-xs" ) %>
+ <%= link_to( wt( 'Edit' ),  edit_draft_path(@draft), :class => "btn btn-default btn-xs" ) if edit_allowed?  %>
+ <%= link_to( wt( 'Destroy' ), draft_path(@draft), :class => "btn btn-default btn-xs", :method => :delete, :confirm => wt( "Destroyed page can't be restored. Are you sure?" ) ) if destroy_allowed? %>
+
+

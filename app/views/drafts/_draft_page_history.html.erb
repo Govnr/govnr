@@ -1,0 +1,34 @@
+<% if with_form %>
+  <form action="<%= url_for(controller:'drafts', action:'compare') %>" method="get">
+  <%= hidden_field_tag('id', @draft.id) %>
+<% end %>
+
+
+<table class="wiki_history">
+  <tr class="wiki_history_header">
+    <td><%=wt 'Version' %></td>
+    <td><%=wt 'Date' %></td>
+    <td><%=wt 'Author' %></td>
+  </tr>
+  <% versions.each do |v| %>
+    <tr>
+      <td>
+        <%=v.number%>
+        <% if with_form %>
+          <input type="radio" name="old" value="<%=v.number%>" <%= 'checked="true" ' if v == versions[-1] %>/>
+          <input type="radio" name="new" value="<%=v.number%>" <%= 'checked="true" ' if v == versions[-2] %>/>
+        <% end %>
+      </td>
+      <td><%=l( v.updated_at, :format => :long ) %></td>
+      <td><%= user_link( v.updater ) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% paginate versions %>
+
+
+<% if with_form %>
+  <%= submit_tag wt 'Compare selected versions', class: 'btn btn-default btn-xs' %>
+  </form>
+<% end %>

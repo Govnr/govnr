@@ -1,0 +1,35 @@
+<canvas id="myChart" width="250" height="250"></canvas>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ["FOR", "AGAINST"],
+        datasets: [{
+            label: '# of Votes',
+            data: [<%= @motion.voteyespercent %>, <%= @motion.votenopercent %>],
+            backgroundColor: [
+                '#5cb85c',
+                '#d9534f'
+            ],
+            borderColor: [
+                '#4cae4c',
+                '#d43f3a'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'Vote Results'
+        },
+        maintainAspectRatio: false,
+        responsive: true,
+         legend: {
+            display: true,
+            position: 'bottom'
+        }
+    }
+});
+</script>

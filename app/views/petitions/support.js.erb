@@ -1,3 +1,5 @@
 $("#petition-supporters").html("<%= escape_javascript(render 'petitions/supporters') %>");
+$("#petition-milestones").html("<%= escape_javascript(render(partial: 'petitions/milestones', locals:{ petition: @petition} )) %>");
 $('#petition-support-modal').modal('hide');
+$('#bar-<%= @petition.id %>').barIndicator('reanimateBar');
 $("#flash-messages").html("<%= escape_javascript(render 'layouts/messages') %>");

@@ -1,14 +1,16 @@
  <li>
     <a href="<%= url_for conversation_path(conversation_small.id) %>">
         <div>
-        <span class="pull-left">
+            <span class="pull-left text-muted"><small>
+              <%= conversation_small.last_message.created_at.strftime("%-d %B, %H:%M") %> 
+             </small>
+            </span> 
+        <span class="pull-left">&nbsp;
             <%= render 'conversations/participants', conversation: conversation_small, size: 15 %>
           </span>
+
         <span class="conversation-subject"><%= conversation_small.subject.truncate(100) %></span>
-          <span class="pull-right text-muted"><small>
-              <%= conversation_small.last_message.created_at.strftime("%-d %B %Y, %H:%M") %>
-             </small>
-            </span>   
+         
         </div>
         <div><%= gravatar_for(conversation_small.last_message.sender,15) %> 
         <span><%= conversation_small.last_message.body.truncate(100) %></span>

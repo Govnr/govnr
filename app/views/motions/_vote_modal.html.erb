@@ -1,0 +1,23 @@
+<!-- modal -->
+  <div class="modal fade" id="motion-vote-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Vote on this motion</h4>
+        </div>
+        <div class="modal-body">
+        <% if @motion.voting_ends_at.past? %>
+          <p>Voting has ended on this motion.</p>
+        <% else %>
+          <% if (current_user.voted_for? @motion) && !(Settings.motions.allow_vote_change == 1)%>
+            <p>You've already voted on this motion, and you can't change or retract your vote.</p>
+          <% else %>
+            <%= render :partial => "vote", motion: @motion  %>
+          <% end %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /modal -->

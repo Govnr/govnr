@@ -1,0 +1,43 @@
+<% breadcrumb :motion, @motion %>
+
+<%= render(partial: 'motions/motion_bar', locals:{ motion: @motion} ) %>
+<div class="row">
+<div class="col-md-6">
+    <div class="chat-panel panel panel-default">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+			<%= simple_format(@motion.content) %>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+</div>
+<div class="col-md-6">
+ <div class="">
+        <!-- /.panel-heading -->
+        <%= render partial:'vote_modal' %>
+        <div class="panel-body" id="poll_or_vote">
+        <%= render partial:'poll_or_vote' %>
+        </div>
+  <!-- /.panel-body -->
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+<div class="chat-panel panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-comments fa-fw"></i>
+        Discussion
+    </div>
+    <!-- /.panel-heading -->
+    <div class="discussion-body">
+     <%= nested_comments @comments.roots  %>
+    </div>
+    <!-- /.panel-body -->
+    <div class="panel-footer">
+        <%= render partial:'/comments/form', commentable: @motion, locals: {comment: Comment.new(parent_id: nil)} %>
+    </div>
+    <!-- /.panel-footer -->
+</div>
+</div>
+</div>

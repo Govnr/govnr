@@ -1,0 +1,96 @@
+<% breadcrumb :settings %>
+
+<%= simple_form_for :settings, :url => group_update_settings_path(group_id: current_group.slug)  do |f| %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <p><strong>Logo</strong></p>
+        <%= group_avatar(@group, class: 'media-object', style: 'width:64px;height:64px;') %><br />
+        <%= f.file_field :logo, required: false, autofocus: true %>
+        <br />
+
+    <strong>Description</strong>
+    <p class="small text-muted input-guide">
+    A short (max 400 characters) description of the group, to help people understand what the group is for.
+    </p>
+    <%= f.input :description, as: "text", class: 'form-control', label: false, input_html: {rows: 3, value: @group.content, style: "min-height:0px;"} %>
+
+
+    <div class="panel panel-header">
+    <a id="petitions-toggle" class="pointer">
+    Petitions <i id="petitions-dropdown-icon" class="fa fa-angle-up" aria-hidden="true"></i>
+    </a>
+    </div>
+    <div id="petitions-form">
+        <strong>Required Support Percent</strong>
+        <p class="small text-muted input-guide">
+        The required percentage of total group members that must support a petition in order for it to be passed to a motion.
+        </p>
+        <%= f.input :petitions_required_support_percent, as: "float", class: 'form-control', label: false, input_html: {value: @settings.petitions_required_support_percent} %>
+
+        <strong>Expiry Time</strong>
+        <p class="small text-muted input-guide">
+        The time it takes for the petition to expire, after which supporting it will no longer be possible.
+        </p>
+        <div class="">
+        <div class="pull-left" style="width:60%;">
+        <%= f.input :petitions_expiry_time, as: "decimal", class: 'form-control' , label: false, input_html: {value: @settings.petitions_expiry_time} %>
+        </div>
+        <div class="pull-right" style="width:40%;">
+        <%= f.select :petitions_expiry_time_unit, options_for_select(['Seconds','Minutes','Hours','Days'], @settings.petitions_expiry_time_unit), {}, {class: 'form-control'}%>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="panel panel-header">
+    <a id="motions-toggle" class="pointer">
+    Motions <i id="motions-dropdown-icon" class="fa fa-angle-up" aria-hidden="true"></i>
+    </a>
+    </div>
+    <div id="motions-form">
+        <strong>Required Vote Percent</strong>
+        <p class="small text-muted input-guide">
+        The required percentage of voters that must vote for a motion in order for it to be passed to a draft statute.
+        </p>
+        <%= f.input :petitions_required_support_percent, as: "float", class: 'form-control', label: false, input_html: {value: @settings.petitions_required_support_percent} %>
+
+        <strong>Delay Before Voting</strong>
+        <p class="small text-muted input-guide">
+        The time a motion is public before voting begins.
+        </p>
+        <div class="">
+        <div class="pull-left" style="width:60%;">
+        <%= f.input :motions_delay_before_voting, as: "decimal", class: 'form-control' , label: false, input_html: {value: @settings.motions_delay_before_voting} %>
+        </div>
+        <div class="pull-right" style="width:40%;">
+        <%= f.select :motions_delay_before_voting_unit, options_for_select(['Seconds','Minutes','Hours','Days'], @settings.motions_delay_before_voting_unit), {}, {class: 'form-control'}%>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+
+        <strong>Voting Duration</strong>
+        <p class="small text-muted input-guide">
+        The time that voting will be allowed for.
+        </p>
+        <div class="">
+        <div class="pull-left" style="width:60%;">
+        <%= f.input :motions_voting_duration, as: "decimal", class: 'form-control' , label: false, input_html: {value: @settings.motions_voting_duration} %>
+        </div>
+        <div class="pull-right" style="width:40%;">
+        <%= f.select :motions_voting_duration_unit, options_for_select(['Seconds','Minutes','Hours','Days'], @settings.motions_voting_duration_unit), {}, {class: 'form-control'}%>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <%= f.button :submit, 'Update', class: 'btn btn-primary btn-sm' %>
+<% end %>
+<script type="text/javascript">
+    $('#petitions-toggle').click(function(){
+        $('#petitions-form').slideToggle('fast');
+        $('#petitions-dropdown-icon').toggleClass('fa-rotate-180')
+    });
+    $('#motions-toggle').click(function(){
+        $('#motions-form').slideToggle('fast');
+        $('#motions-dropdown-icon').toggleClass('fa-rotate-180')
+    });
+</script>

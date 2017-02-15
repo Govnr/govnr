@@ -2,6 +2,7 @@ class CreateComments < ActiveRecord::Migration
   def change
     create_table :comments do |t|
       t.text :content
+      t.integer :group_id
       t.integer :user_id
       t.integer :rating
       t.integer :upvotes
@@ -18,5 +19,6 @@ class CreateComments < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :comments, :ancestry
+    add_index :comments, :group_id
   end
 end

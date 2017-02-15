@@ -8,13 +8,14 @@ class CreateActivities < ActiveRecord::Migration
       t.string  :key
       t.text    :parameters
       t.belongs_to :recipient, :polymorphic => true
-
+      t.integer :group_id
       t.timestamps
     end
 
     add_index :activities, [:trackable_id, :trackable_type]
     add_index :activities, [:owner_id, :owner_type]
     add_index :activities, [:recipient_id, :recipient_type]
+    add_index :activities, :group_id
   end
   # Drop table
   def self.down

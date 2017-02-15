@@ -1,4 +1,15 @@
-<% js = escape_javascript(
-  render(partial: 'dashboard/activity_feed')
+<% acts = escape_javascript(
+  render(partial: 'activity', collection: @activities, cached: true)
 ) %>
-$("#activity_feed").html("<%= js %>");
+<% stats = escape_javascript(
+  render(partial: 'quick_stats_bar', cached: true)
+) %>
+$('#activities-container').append('<%= acts %>');
+$('#quick_stats').html('<%= stats %>');
+quick_stats
+// $('.pagination').text
+$('.pagination').replaceWith('<%= escape_javascript (paginate(@activities)) %>');
+if (!$('.pagination').find('.next').length)
+{
+	$('.pagination').replaceWith('');
+}

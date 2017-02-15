@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!
-
+  before_action :set_group, only: [:create]
+  
   def show
     @commentable = find_commentable
     @comment = Comment.find(params[:id])
@@ -22,7 +23,7 @@ class CommentsController < ApplicationController
     @comment.parent_id = comment_params[:parent_id]
     if @comment.save
       flash[:notice] = "Successfully created comment."
-      redirect_to @commentable
+      redirect_to [@commentable.group,@commentable]
     else
       flash[:error] = "Error adding comment."
     end
@@ -37,10 +38,14 @@ class CommentsController < ApplicationController
     @comment.report_comment = comment_params[:report_comment]
     if @comment.save
       flash[:notice] = "Successfully reported comment."
-      redirect_to @commentable
+      redirect_to [@commentable.group,@commentable]
     else
       flash[:error] = "Error reporting comment."
     end
+    respond_to do |format|
+        format.html { }
+        format.js { }
+      end
   end
 
   def upvote
@@ -50,10 +55,14 @@ class CommentsController < ApplicationController
     @comment.create_activity :upvote, owner: current_user
     if @comment.save
       flash[:notice] = "Successfully upvoted comment."
-      redirect_to @commentable
+      redirect_to [@commentable.group,@commentable]
     else
       flash[:error] = "Error upvoting comment."
     end
+    respond_to do |format|
+        format.html { }
+        format.js { }
+      end
   end
 
   def downvote
@@ -63,22 +72,31 @@ class CommentsController < ApplicationController
     @comment.create_activity :downvote, owner: current_user
     if @comment.save
       flash[:notice] = "Successfully downvoted comment."
-      redirect_to @commentable
+      redirect_to [@commentable.group,@commentable]
     else
       flash[:error] = "Error downvoted comment."
     end
   end
  
   private
+    # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.friendly.find(params[:comment][:group_id])
+  end
+
   def find_commentable
     params.each do |name, value|
       if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
+        if (name == 'group_id')
+          return Group.friendly.find(value)
+        else
+          return $1.classify.constantize.find(value)
+        end
       end
     end
     nil
   end
   def comment_params
-    params.require(:comment).permit(:content, :parent_id, :rating, :upvotes, :downvotes, :report_reason, :report_comment, :status, :commentable_id, :commentable_type, :id)
+    params.require(:comment).permit(:group_id, :content, :parent_id, :rating, :upvotes, :downvotes, :report_reason, :report_comment, :status, :commentable_id, :commentable_type, :id)
   end
 end

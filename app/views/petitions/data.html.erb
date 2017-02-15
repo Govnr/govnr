@@ -1,12 +1,98 @@
 <% breadcrumb :petitionsdata %>
-
-<p id="notice"><%= notice %></p>
 <div class="row">
-<div class="col-lg-6">
+<div class="col-md-6">
 	<%= render(:partial => "/petitions/data/petitions_count") %>
 </div>
-<div class="col-lg-6">
+<div class="col-md-6">
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
 	<%= render(:partial => "/petitions/data/petitions_support_spread") %>
 </div>
+<div class="col-md-6">
+	<%= render(:partial => "/petitions/data/petitions_expiry_time") %>
 </div>
+</div>
+<script>
+		window.onload = function(){
+			var spreadChart = document.getElementById("petitionSpreadChart");
+			var petitionSpread = new Chart(spreadChart, {
+		    type: 'doughnut',
+		    data: {
+		        labels: ["0-30%", "30-70%", "70%+"], 
+		        position: 'bottom',
+		        datasets: [{
+		            label: '# of Votes',
+		            data: [<%= @support_spread[0] %>, <%= @support_spread[1] %>, <%= @support_spread[2] %>],
+		            backgroundColor: [
+		                "#ff6363",
+		                "#FFCE56",
+		                "#62BA46"
+		            ],
+		            hoverBackgroundColor: [
+		                "#fe8383",
+		                "#ffd556",
+		                "#6bcd4c"
+		            ]
+		        }]
+		    },
+		    options: {
+		    	 title: {
+		            display: false,
+		            text: 'Petition Spread'
+		        },
+		        maintainAspectRatio: false,
+		        responsive: true,
+		         legend: {
+		            display: true,
+		            position: 'bottom'
+		        }
+		    },
+		    animation:{
+		        animateScale:true
+		    }
+		});
+					var expiryChart = document.getElementById("petitionExpiryChart");
+			var expirySpread = new Chart(expiryChart, {
+		    type: 'doughnut',
+		    data: {
+		        labels: ["Expired", "Less than 1 day", "Less than 7 days", "Less than 30 days"], 
+		        position: 'bottom',
+		        datasets: [{
+		            label: '# of Votes',
+		            data: [<%= @expiry_spread[0] %>, <%= @expiry_spread[1] %>, <%= @expiry_spread[2] %>, <%= @expiry_spread[3] %>],
+		            backgroundColor: [
+		                "#889",
+		                "#ff6363",
+		                "#FFCE56",
+		                "#62BA46"
+		            ],
+		            hoverBackgroundColor: [
+		                "#999",
+		                "#fe8383",
+		                "#ffd556",
+		                "#6bcd4c"
+		            ]
+		        }]
+		    },
+		    options: {
+		    	 title: {
+		            display: false,
+		            text: 'Expiry Spread'
+		        },
+		        maintainAspectRatio: false,
+		        responsive: true,
+		         legend: {
+		            display: true,
+		            position: 'bottom'
+		        }
+		    },
+		    animation:{
+		        animateScale:true
+		    }
+		});
+		}
+		</script>
 

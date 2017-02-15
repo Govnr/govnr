@@ -1,6 +1,11 @@
 class User < ActiveRecord::Base
 	acts_as_voter
 	acts_as_messageable
+	extend Dragonfly::Model
+	include Avatarable
+	dragonfly_accessor :photo
+	has_many :group_memberships
+	has_many :groups, through: :group_memberships
   	has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
@@ -78,11 +83,16 @@ class User < ActiveRecord::Base
 	end
 
 	def name
-		return self.first_name + ' ' + self.last_name
+		[first_name, last_name].join(' ')
 	end
 
+	# required for avatarable
+    def avatar_text
+        first_name.chr
+    end
+
 	def mailboxer_email(object)
-		return self.email
+		email
 	end
 
 	ROLES = %i[moderator admin]

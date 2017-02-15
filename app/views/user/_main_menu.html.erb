@@ -1,7 +1,15 @@
  <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li><form action="<%= url_for(:controller => 'search', :action => 'search') %>" method = 'get'>
+        <ul class="nav nav-menu" id="side-menu">
+            <% if current_group.present? %>
+            <li class="group-menu-item">
+            <%= link_to group_path(current_group.slug) do %>
+            <div class="row-spacer"></div>
+            <div align="center"> <%= group_avatar(current_group, class: 'icon-space', style: 'width:36px;height:36px;') %><strong><%= current_group.name %></strong></div>
+            <div class="row-spacer"></div>
+            <% end %>
+            </li>
+            <li><form action="<%= search_group_path(current_group.slug) %>" method = 'get'>
                 <div class="input-group custom-search-form">
                     
                       <%= text_field_tag :q, params[:q], placeholder: 'Search...', class: 'form-control' %>
@@ -13,48 +21,73 @@
                 </div>
                       </form>
             </li>
-            <% if current_user.has_role?(:admin) %>
-               
-                 <li class='<%= 'active' if current_page? action: :index %>'>
-                 
-                     <%= link_to admin_configuration_path do %>
-                         <i class="fa fa-cogs fa-fw"></i> Admin
-                     <% end %>
-                 </li>
-             <% end %>
             <li>
-                <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
-            <li>
-                <a href="*"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
+                <a href="*">
+                <%= users_icon %>
+                Users<span class="fa arrow"></span></a>
                  <ul class="nav nav-second-level">
                  
                  <li class='<%= 'active' if current_page? action: :index %>'>
-                   <%= link_to("User List", users_path) %>
+                   <%= link_to("User List", group_users_path(group_id: current_group.slug)) %>
                     </li>
                     <li class='<%= 'active' if current_page? action: :following %>'>
-                   <%= link_to("Following", following_user_path(current_user.id)) %>
-                    </li>
-                </ul>
-            </li>
-            <!-- Petitions Menu Items -->
-            <li>
-                <a href="*"><i class="fa fa-bullhorn fa-fw"></i> Petitions<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                   <%= link_to("Petitions", petitions_path) %>
-                    </li>
-                    <li>
-                      <%= link_to("Data", data_petitions_path) %>
-                    </li>
-                    <li>
-                       <%= link_to("Create a Petition", new_petition_path) %>
+                   <%= link_to("Following", following_group_user_path(group_id: current_group.slug, id: current_user.id)) %>
                     </li>
                 </ul>
             </li>
             <li>
+                <a href="*">
+                <%= petition_icon %>
+                Petitions<span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                    <li>
+                   <%= link_to("Petitions", group_petitions_path(group_id: current_group.slug)) %>
+                    </li>
+                    <li>
+                      <%= link_to("Data", data_group_petitions_path(group_id: current_group.slug)) %>
+                    </li>
+                    <li>
+                       <%= link_to("Create a Petition", new_group_petition_path(group_id: current_group.slug)) %>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="*">
+                <%= motion_icon %>
+                 Motions<span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                    <li>
+                   <%= link_to("Motions", group_motions_path(group_id: current_group.slug)) %>
+                    </li>
+                    <li>
+                      <%= link_to("Data", data_group_motions_path(group_id: current_group.slug)) %>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="<%= drafts_path %>">
+                <%= draft_icon %>
+                Drafts<span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                    <li>
+                   <%= link_to("Drafts", group_drafts_path(group_id: current_group.slug)) %>
+                    </li>
+                </ul>
+            </li>
+             <li>
+                <a href="<%= statutes_path %>">
+                <%= statute_icon %>
+                Statutes<span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                    <li>
+                   <%= link_to("Statutes", group_statutes_path(group_id: current_group.slug)) %>
+                    </li>
+                </ul>
+            </li>
+            <% end %>
+            <!-- <li>
                 <a href="/wiki"><i class="fa fa-book fa-fw"></i> Wiki</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

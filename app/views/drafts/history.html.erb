@@ -1,0 +1,21 @@
+<% breadcrumb :draft, @draft %>
+
+ <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+    <div class="pull-left"> <i class="fa fa-file-text-o fa-fw"></i></div>
+    <%=wt '%{page_title} - Version History', :page_title => @draft.name %>
+        <div class="pull-right">
+            <div>
+                <%= render partial:'draft_page_actions'%>
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <%= render partial:'draft_page_history', locals: { draft: @draft, versions: @versions, with_form: (@versions.size > 1)} %>
+
+			<%= link_to "Back to draft", draft_path(@draft) %>
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->

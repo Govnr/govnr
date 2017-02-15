@@ -1,0 +1,18 @@
+<div class="row">
+ <div class="col-md-12">
+  <div class="container-fluid timeline-container">
+    <div class="timeline">
+    <% if @activities.size == 0 %>
+      <div align="center" class="text-muted"><small>No activity in this feed.</small></div>
+      <% else %>
+     <div class="line"></div>
+      <div id="activities-container">
+        <%= render partial: 'groups/activity/activity', collection: @activities, locals: {small:false}, cached: true %>
+      </div>
+      <% end %>
+    </div>      
+    <div><%= paginate @activities , :remote => true %></div>
+     <div class="row-spacer-xl"></div>
+  </div>
+ </div>
+</div>

@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721063605) do
+ActiveRecord::Schema.define(version: 20160804100455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string   "namespace"
+    t.text     "body"
+    t.string   "resource_id",   null: false
+    t.string   "resource_type", null: false
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
@@ -29,16 +40,37 @@ ActiveRecord::Schema.define(version: 20160721063605) do
     t.text     "parameters"
     t.integer  "recipient_id"
     t.string   "recipient_type"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "activities", ["group_id"], name: "index_activities_on_group_id", using: :btree
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
+  create_table "admin_users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.text     "content"
+    t.integer  "group_id"
     t.integer  "user_id"
     t.integer  "rating"
     t.integer  "upvotes"
@@ -56,6 +88,97 @@ ActiveRecord::Schema.define(version: 20160721063605) do
   end
 
   add_index "comments", ["ancestry"], name: "index_comments_on_ancestry", using: :btree
+  add_index "comments", ["group_id"], name: "index_comments_on_group_id", using: :btree
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "draft_versions", force: :cascade do |t|
+    t.string   "name"
+    t.text     "content"
+    t.integer  "draft_id"
+    t.integer  "updater_id"
+    t.integer  "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "drafts", force: :cascade do |t|
+    t.string   "name"
+    t.text     "content"
+    t.integer  "motion_id"
+    t.integer  "updater_id"
+    t.integer  "creator_id"
+    t.integer  "statute_id"
+    t.integer  "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "roles_mask"
+    t.datetime "last_active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "group_settings", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "logo_uid"
+    t.decimal  "petitions_required_support_percent"
+    t.decimal  "petitions_expiry_time"
+    t.string   "petitions_expiry_time_unit"
+    t.decimal  "motions_delay_before_voting"
+    t.string   "motions_delay_before_voting_unit"
+    t.decimal  "motions_voting_duration"
+    t.string   "motions_voting_duration_unit"
+    t.decimal  "motions_required_majority_percent"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "group_settings", ["group_id"], name: "index_group_settings_on_group_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name"
+    t.text     "content"
+    t.string   "slug"
+    t.boolean  "private"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "groups", ["slug"], name: "index_groups_on_slug", using: :btree
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -110,11 +233,31 @@ ActiveRecord::Schema.define(version: 20160721063605) do
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
   add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type", using: :btree
 
+  create_table "motions", force: :cascade do |t|
+    t.integer  "petition_id"
+    t.string   "name"
+    t.text     "content"
+    t.integer  "group_id"
+    t.datetime "voting_starts_at"
+    t.datetime "voting_ends_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "motions", ["petition_id"], name: "index_motions_on_petition_id", using: :btree
+
   create_table "petitions", force: :cascade do |t|
     t.string   "name"
     t.text     "content"
     t.integer  "creator_id"
+    t.integer  "group_id"
     t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.time     "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -129,6 +272,14 @@ ActiveRecord::Schema.define(version: 20160721063605) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "statutes", force: :cascade do |t|
+    t.string   "name"
+    t.text     "content"
+    t.integer  "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -157,9 +308,9 @@ ActiveRecord::Schema.define(version: 20160721063605) do
     t.string   "address"
     t.string   "postcode"
     t.string   "encrypted_password"
-    t.string   "salt"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "group_id"
+    t.integer  "current_group_id"
+    t.integer  "roles_mask"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -175,11 +326,14 @@ ActiveRecord::Schema.define(version: 20160721063605) do
     t.integer  "failed_attempts",        default: 0, null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.integer  "roles_mask"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "photo_uid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 

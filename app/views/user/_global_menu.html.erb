@@ -1,0 +1,81 @@
+<li>
+    <a href="*">
+    <%= dashboard_icon %> Dashboard <span class="fa arrow"></span></a>
+     <ul class="nav nav-second-level">
+       <li>
+          <%= link_to("Activity", activity_path) %>
+       </li>
+     </ul>
+</li>
+<li>
+    <li>
+    <a href="*">
+    <%= users_icon %>
+    Base<span class="fa arrow"></span></a>
+     <ul class="nav nav-second-level">
+        <li>
+            <a href="*">
+            <%= user_icon %>
+            Users<span class="fa arrow"></span></a>
+             <ul class="nav nav-third-level">
+             
+             <li class='<%= 'active' if current_page? action: :index %>'>
+               <%= link_to("User List", group_users_path(group_id: current_group.slug)) %>
+                </li>
+                <li class='<%= 'active' if current_page? action: :following %>'>
+               <%= link_to("Following", following_group_user_path(group_id: current_group.slug, id: current_user.id)) %>
+                </li>
+            </ul>
+        </li>
+         <li>
+		    <a href="*">
+		    <%= petition_icon %>
+		    Petitions<span class="fa arrow"></span></a>
+		    <ul class="nav nav-third-level">
+		        <li>
+		       <%= link_to("Petitions", petitions_path) %>
+		        </li>
+		        <li>
+		          <%= link_to("Data", data_petitions_path) %>
+		        </li>
+		        <li>
+		           <%= link_to("Create a Petition", new_petition_path) %>
+		        </li>
+		    </ul>
+		</li>
+		<li>
+		    <a href="*">
+		    <%= motion_icon %>
+		     Motions<span class="fa arrow"></span></a>
+		    <ul class="nav nav-third-level">
+		        <li>
+		       <%= link_to("Motions", motions_path) %>
+		        </li>
+		        <li>
+		          <%= link_to("Data", data_motions_path) %>
+		        </li>
+		    </ul>
+		</li>
+		<li>
+		    <a href="<%= drafts_path %>">
+		    <%= draft_icon %>
+		    Drafts<span class="fa arrow"></span></a>
+		    <ul class="nav nav-third-level">
+		        <li>
+		       <%= link_to("Drafts", drafts_path) %>
+		        </li>
+		    </ul>
+		</li>
+		 <li>
+		    <a href="<%= statutes_path %>">
+		    <%= statute_icon %>
+		    Statutes<span class="fa arrow"></span></a>
+		    <ul class="nav nav-third-level">
+		        <li>
+		       <%= link_to("Statutes", statutes_path) %>
+		        </li>
+		    </ul>
+		</li>
+    </ul>
+    </li>
+</li>

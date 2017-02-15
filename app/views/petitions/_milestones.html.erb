@@ -1,12 +1,12 @@
 <% @req_votes = petition.required_votes %>
-<div class="petition-supporter-bar"><span id="bar-<%= petition.id %>"><%= petition.votes_for.size %></span></div>
+<% @support = petition.support_percent %>
+<div class="petition-supporter-bar"><span id="bar-<%= petition.id %>"><%= @support %></span></div>
 <div align="centre">
 </div>
 <script>
 var opt = {
-	numType:'absolute',
  numMin:0,
- numMax:<%= @req_votes %>,
+ numMax:100,
  horBarHeight:30,
  colorRange:true,
  colorRangeLimits: {
@@ -18,21 +18,21 @@ var opt = {
  },
  milestones: {
   1: {
-   mlPos: <%= (@req_votes / 3) %>,
+   mlPos: 30,
    mlId: false,
    mlClass: 'bi-custom',
    mlDim: '140%',
-   mlLabel: '<%= (@req_votes / 3) %>',
+   mlLabel: '30%',
    mlLabelVis: 'hover',
    mlHoverRange: 15,
    mlLineWidth: 1
   },
   2: {
-   mlPos: <%= (@req_votes / 3) * 2 %>,
+   mlPos: 70,
    mlId: false,
    mlClass: 'bi-custom',
    mlDim: '140%',
-   mlLabel: '<%= (@req_votes / 3) * 2 %>',
+   mlLabel: '70%',
    mlLabelVis: 'hover',
    mlHoverRange: 15,
    mlLineWidth: 1

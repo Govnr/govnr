@@ -1,0 +1,105 @@
+<a id="filter"><div class="filter-form-dropdown-button">
+<small> Activity </small><i id="" class="filter-dropdown-icon fa fa-angle-down" aria-hidden="true"></i>
+</div></a>
+<div id="filterForm">
+ <div id="activity-filter-controls" align="center">
+ <%= form_tag activity_path, :id => 'activity_filter_form',  method: 'get', remote: true do -%>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <small><strong>Show</strong></small><br />
+      <div class="btn-group" style="width:100%;">
+      <button type="button" style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+          <%= @feed %> Activity
+          <small><i class="fa fa-chevron-down"></i></small>
+      </button>
+      <ul class="dropdown-menu slidedown">
+        <li class="<%= 'active' if @feed == 'all' %>">
+            <%= link_to activity_path(feed: 'all') do %>
+              <i class="fa fa-newspaper-o fa-fw"></i> All Activity
+            <% end %>
+        </li>
+        <li>
+            <%= link_to activity_path(feed: 'followed') do %>
+            <i class="fa fa-users fa-fw"></i> Followed Activity
+            <% end %>
+        </li>
+        <li class="divider"></li>
+        <li class="<%= 'active' if @feed == 'comment' %>">
+            <%= link_to activity_path(feed: 'comment') do %>
+              <i class="fa fa-comments-o fa-fw"></i> Comment Activity
+            <% end %>
+        </li>
+        <li class="<%= 'active' if @feed == 'petition' %>">
+            <%= link_to activity_path(feed: 'petition') do %>
+              <i class="fa fa-bullhorn fa-fw"></i> Petition Activity
+            <% end %>
+        </li>
+        <li class="<%= 'active' if @feed == 'motion' %>">
+            <%= link_to activity_path(feed: 'motion') do %>
+              <i class="fa fa-balance-scale fa-fw"></i> Motion Activity
+            <% end %>
+        </li>
+        <li class="<%= 'active' if @feed == 'draft' %>">
+            <%= link_to activity_path(feed: 'draft') do %>
+              <i class="fa fa-file-text-o fa-fw"></i> Draft Activity
+            <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-6">
+  <small><strong>Containing </strong></small>
+  <%= text_field_tag :containing, nil, cols: 3, class: 'form-control input-sm', id: 'containingfield' %>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-6">
+  <small><strong>Start Date </strong></small>
+    <div>
+         <%= hidden_field_tag(:feed, @feed.downcase) if @feed.present?%>
+         
+         <div class="input-group">
+        <%= text_field_tag :created_after, nil, cols: 3, class: 'form-control input-sm', id: 'datetimepicker1' %>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-xs-6">
+  <small><strong>Until Date </strong></small>
+    <div>
+         <%= hidden_field_tag(:feed, @feed.downcase) if @feed.present?%>
+         
+         <div class="input-group">
+        <%= text_field_tag :created_before, nil, cols: 3, class: 'form-control input-sm', id: 'datetimepicker2' %>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <% end -%>
+ </div>
+</div>
+<script type="text/javascript">
+    $('#filter').click(function(){
+        $('#filterForm').slideToggle('fast');
+        $('.filter-dropdown-icon').toggleClass('fa-rotate-180')
+    });
+    $('#containingfield').change(function(){
+        $("#activities-container").html('');
+        $("#activity_filter_form").submit();
+    });
+    $('#datetimepicker1').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm'
+    }).on('dp.change', function (e) {
+        $("#activities-container").html('');
+        $("#activity_filter_form").submit();
+    }); 
+     $('#datetimepicker2').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm'
+    }).on('dp.change', function (e) {
+        $("#activities-container").html('');
+        $("#activity_filter_form").submit();
+    }); 
+</script>

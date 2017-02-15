@@ -1,4 +1,4 @@
-/*!
+chat-panel/*!
  * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
@@ -17,7 +17,7 @@ body {
 @media (min-width: 768px) {
   #page-wrapper {
     position: inherit;
-    margin: 0 0 0 250px;
+    margin: 0 0 0 200px;
     padding: 0 30px;
     border-left: 1px solid #e7e7e7;
   }
@@ -105,7 +105,7 @@ body {
   .sidebar {
     z-index: 1;
     position: absolute;
-    width: 250px;
+    width: 200px;
     margin-top: 51px;
   }
   .navbar-top-links {
@@ -162,7 +162,7 @@ body {
     }
   }
 }
-.panel .slidedown .glyphicon,
+.slidedown .glyphicon,
 .chat .glyphicon {
   margin-right: 5px;
 }

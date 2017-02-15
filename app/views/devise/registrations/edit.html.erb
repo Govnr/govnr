@@ -16,6 +16,10 @@
         <%= f.input :last_name, required: true, autofocus: true %>
         <%= f.input :address, required: false, autofocus: true %>
         <%= f.input :postcode, required: false, autofocus: true %>
+        <strong>Photo</strong>
+        <%= user_avatar(resource, class: 'media-object', style: 'width:64px;height:64px;') %><br />
+        <%= f.file_field :photo, required: false, autofocus: true %>
+        <br />
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
         <% end %>
@@ -32,7 +36,7 @@
 
     <h3>Cancel your account</h3>
 
-    <p><%= link_to "Cancel your account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+    <p>If you wish to cancel your account, please click the following link.<br /><%= link_to "Cancel your account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
     <%= link_to "Back", :back %>
     </div>

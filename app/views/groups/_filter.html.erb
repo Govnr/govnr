@@ -1,0 +1,27 @@
+<div>
+<div class="col-xs-9 col-sm-10 col-md-11">
+<%= form_for_filterrific @filterrific do |f| %>
+    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+    <small><strong>Search for</strong></small>
+    <%= f.text_field(
+      :search_query,
+      as: 'string',
+      class: 'filterrific-periodically-observed form-control',
+      placeholder: 'Query'
+    ) %>
+<% end %>
+</div>
+<div class="col-xs-3 col-sm-2 col-md-1">
+<small><strong>Per page</strong></small>
+    <%= form_tag groups_path, method: :get, id: 'limit_form', remote: true do %>
+             <%= select_tag :limit, options_for_select([5, 10, 15, 20], 
+          selected: params[:limit] || 10), class: 'form-control' %>
+          <% end %>
+</div>
+<div class="clearfix"></div>
+</div>
+<script>
+$('#queryfield').change(function(){
+        $("#group_filter_form").submit();
+    });
+</script>

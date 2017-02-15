@@ -9,7 +9,7 @@
     <div id="tag_cloud">
 
 <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
- <%= link_to tag.name, tag_path(tag.name), :class => css_class %>
+ <%= link_to tag.name, petition_tag_path(group_id: @group.slug, tag:tag.name), :class => css_class %>
 <% end %>
     </div>
   </div>
@@ -24,7 +24,7 @@
   <div class="col-lg-12">
    <div class="panel panel-default panel-toolbar">
     <div class="panel-heading">
-       <%= render(partial: 'petitions/filters') %>
+       <%= render(partial: 'layouts/filters', locals:{form_path: group_petitions_path}) %>
     </div>
   </div>
  </div>

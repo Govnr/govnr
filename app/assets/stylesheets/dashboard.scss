@@ -1,3 +1,35 @@
 // Place all the styles related to the Dashboard controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.activity-week-col 
+{
+
+}
+
+.activity-week-container
+{
+	margin-bottom: -18px;
+	width:100%;
+}
+
+.activity-week-container-header
+{
+	margin-bottom:6px;
+	text-align:center;
+	font-size: 0.8em;
+	color: #777;
+	background-color: #F2F2F2;
+}
+
+.activity-week-header
+{
+	font-size: 0.85em;
+	font-weight: bold;
+	padding-top:4px;
+}
+
+.activity-week-value
+{
+	padding-bottom:4px;
+}

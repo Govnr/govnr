@@ -1,0 +1,10 @@
+<% js = escape_javascript(
+  render(partial: 'drafts/list', locals: { drafts: @drafts })
+) %>
+$("#page_results").html("<%= js %>");
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });

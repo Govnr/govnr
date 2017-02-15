@@ -1,1 +1,10 @@
-<h1>Config</h1>
+<h3>Configuration</h3>
+<%= simple_form_for :update, :url => url_for(:action => 'update', :controller => 'admin',
+    :method => 'post') do |f| %>
+    <%= f.input :petitions_required_vote_percent, as: "float", class: 'form-control', input_html: {value: Settings.petitions.required_vote_percent} %>
+    <%= f.input :petitions_expiry_time, as: "float", class: 'form-control' , input_html: {value: Settings.petitions.expiry_time} %>
+    <%= f.input :motions_delay_before_voting, as: "float", class: 'form-control' , input_html: {value: Settings.motions.delay_before_voting} %>
+    <%= f.input :motions_voting_duration, as: "float", class: 'form-control', input_html: {value: Settings.motions.voting_duration} %>
+    <%= f.input :motions_required_majority_percent, as: "float", class: 'form-control' , input_html: {value: Settings.motions.required_majority_percent} %>
+    <%= f.button :submit, 'Update', class: 'btn btn-primary btn-sm' %>
+<% end %>

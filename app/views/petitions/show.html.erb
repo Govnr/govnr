@@ -1,24 +1,8 @@
 <% breadcrumb :petition, @petition %>
-<p id="notice"><%= notice %></p>
-<h1>
- <%= @petition.name %>
-</h1>
-<p>
- <small> <strong>Created by:</strong> <%= link_to User.find(@petition.creator_id).name, user_path(@petition.creator_id) %></small>
-</p>
-<p>
- <small> <strong>Tags:</strong> <%= @petition.tag_list %></small>
-</p>
-<% @petition.tag_list do |tag| %>
-<%= link_to tag petition_tag_path(tag), :tagged_with => tag %>
-<% end %>
+<%= render(partial: 'petitions/header', locals:{ petition: @petition} ) %>
 <div class="row">
-<div class="col-lg-6">
-    <div class="chat-panel panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-bullhorn fa-fw"></i>
-            Petition Description
-        </div>
+<div class="col-md-6">
+    <div class="panel chat-panel panel-default">
         <!-- /.panel-heading -->
         <div class="panel-body">
 			<%= simple_format(@petition.content) %>
@@ -26,21 +10,18 @@
         <!-- /.panel-body -->
     </div>
 </div>
-<div class="col-lg-6">
- <div class="chat-panel panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-hand-pointer-o fa-fw"></i>
-            Supporters
-        </div>
+<div class="col-md-6">
+ <div class="">
         <!-- /.panel-heading -->
         <div class="panel-body">
         <div id="petition-supporters">
         <%= render :partial => "supporters", petition: @petition  %>
         </div>
-      
         <%= render partial:'support_modal' %>
+        <div id="petition-milestones">
         <%= render(partial: 'petitions/milestones', locals:{ petition: @petition} ) %>
-        <small>A total of <%= @req_votes %> supporters will trigger a motion.</small>
+        </div>
+        <%= render(partial: 'petitions/required_supporters', locals:{ petition: @petition} ) %>
         </div>
   <!-- /.panel-body -->
     </div>
@@ -65,5 +46,3 @@
 </div>
 </div>
 </div>
-<%= link_to 'Edit', edit_petition_path(@petition) %> |
-<%= link_to 'Back', petitions_path %>

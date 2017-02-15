@@ -1,9 +1,6 @@
-crumb :root do
-  link "Dashboard", root_path
-end
-
 crumb :conversations do
   link "Messages", conversations_path
+  parent :dashboard
 end
 
 crumb :conversation do |conversation|

@@ -1,0 +1,21 @@
+<div class="row row-listitem">
+    <div class="col-sm-8 listitem-title-box">
+       <div class="listitem-title">
+
+          <strong>
+           <%= link_to group_motion_path(group_id: Group.find(motion.group_id).slug, id: motion.id) do %>
+           <i class="fa fa-balance-scale fa-fw"></i>
+           <%= motion.name %>
+           <% end %>
+           </strong><br />
+          <span class="text-muted">
+            <small> <%= motion.tag_list %> </small>
+          </span>
+       </div>
+    </div>
+    <div class="col-sm-4 col-slim">
+      <span id = "motion-countdown-<%= motion.id %>">
+        <%= render partial: 'motions/countdown', locals:{ motion: motion, reload_on_finish: true} %>
+      </span>
+    </div>
+  </div>

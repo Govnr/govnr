@@ -1,0 +1,19 @@
+<% if (current_user.voted_for? @motion) && !(Settings.motions.allow_vote_change == 1) %>
+	<small><strong>You already voted on this motion.</strong></small>
+<% else %>
+
+<div class="input-group">
+<%= simple_form_for :vote, remote:true, :url => url_for(:action => 'vote', :controller => 'motions',
+    :method => 'post', id: @motion.id ) do |f| %>
+   <%= f.input :vote_for, 
+          :collection => [[true, 'Yes'], [false, 'No']], 
+          :label => 'Should this motion be passed into statute?',
+          :label_method => :last, 
+          :value_method => :first,
+          :as => :radio_buttons, 
+          :item_wrapper_class => 'inline',
+          :checked => true %>
+   <%= f.submit "Submit Vote", :class => 'btn btn-default btn-lg'%>
+  <% end %>
+</div>
+<% end %>

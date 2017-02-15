@@ -1,55 +1,17 @@
 <div class="row">
 <div class="col-md-12">
-<div class="panel panel-default">
-<div class="panel-heading">
-<div class="btn-group pull-left">
-        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-chevron-down"></i>
-            <%= @feed %> Activity
-        </button>
-        <ul class="dropdown-menu slidedown">
-            <li>
-                <%= link_to dashboard_path, remote: true do %>
-                <i class="fa fa-users fa-fw"></i> Followed Activity
-                <% end %>
-            </li>
-            <li class="<%= 'active' if @feed == 'all' %>">
-                <%= link_to dashboard_path(feed: 'all'), remote: true do %>
-                  <i class="fa fa-newspaper-o fa-fw"></i> All Activity
-                <% end %>
-            </li>
-            <li class="divider"></li>
-            <li class="<%= 'active' if @feed == 'comments' %>">
-                <%= link_to dashboard_path(feed: 'comments'), remote: true do %>
-                  <i class="fa fa-comments-o fa-fw"></i> Comment Activity
-                <% end %>
-            </li>
-        </ul>
-    </div>
-     <%= simple_form_for dashboard_path, method: 'get' do |f| %>
-    <div class="input-group">
-   
-        <%= f.text_field(:start_time, class: 'form-control', id: 'datetimepicker1') %>
-        <%= f.submit %>
-    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-    </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
-        <% end %>
-    <div class="clearfix"></div>
-  </div>
-
   <div class="container-fluid timeline-container">
     <div class="timeline">
-    <div class="line"></div>
-    <%= render partial: 'activity', collection: @activities, cached: true %>
-    </div>
+    <% if @activities.size == 0 %>
+      <div align="center" class="text-muted"><small>No activity in this feed.</small></div>
+      <% else %>
+      <div id="activities-container" class="">
+          <%= render partial: 'activity', collection: @activities, cached: true %>
+      </div>
+      <% end %>
+    </div>      
+    <div><%= paginate @activities , :remote => true %></div>
+     <div class="row-spacer-xl"></div>
   </div>
-</div>
 </div>
 </div>

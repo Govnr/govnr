@@ -1,0 +1,21 @@
+<% breadcrumb :activity %>
+<div id="dashboard_bar">
+<%= render partial: 'dashboard_bar' %>
+</div>
+<div id="activity_feed">
+  <%= render partial: 'activity_feed' %>
+</div>
+<script>
+$(document).ready(function() {
+  if ($('.pagination').length) {
+    $(window).scroll(function() {
+      var url = $('.next').find('a').attr('href');
+      if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 50) {
+        $('.pagination').html('<div class="loader-spin"></div>');
+        return $.getScript(url);
+      }
+    });
+    return $(window).scroll();
+  }
+});
+</script>

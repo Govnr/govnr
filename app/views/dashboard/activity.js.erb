@@ -1,0 +1,10 @@
+<% acts = escape_javascript(
+  render(partial: 'activity', collection: @activities, cached: true)
+) %>
+$('#activities-container').append('<%= acts %>');
+// $('.pagination').text
+$('.pagination').replaceWith('<%= escape_javascript (paginate(@activities)) %>');
+if (!$('.pagination').find('.next').length)
+{
+	$('.pagination').replaceWith('');
+}

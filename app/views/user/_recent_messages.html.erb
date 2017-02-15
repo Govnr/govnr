@@ -1,0 +1,6 @@
+<% @conversations = get_recent_conversations %>
+<% if @conversations.size > 0 %>
+    <%= render partial: 'conversations/conversation_small', collection:@conversations, cached: true %>
+<% else %>
+    <li class="text-muted container-fluid small">No messages to display.</li>
+<% end %>

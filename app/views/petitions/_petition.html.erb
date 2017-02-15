@@ -2,17 +2,27 @@
     <div class="col-sm-6 listitem-title-box">
        <div class="listitem-title">
           <strong>
-           <%= link_to petition.name, petition %>
-           </strong>
+           <% if (petition.group_id.present? && petition.group_id > 0) %>
+           <%= link_to group_petition_path(group_id: Group.find(petition.group_id).slug, id: petition.id) do %>
+            <i class="fa fa-bullhorn fa-fw"></i>
+            <%= petition.name %>
+           <% end %>
+           <% end %>
+           </strong><br/>
           <span>
-            [<small> <%= petition.tag_list %> </small>]
+            <small class="text-muted"></i><%= petition.tag_list %></small>
           </span>
        </div>
     </div>
-    <div class="col-sm-4 col-slim">
+    <div class="col-sm-3 col-slim">
     <%= render(partial: 'petitions/milestones_sm', locals:{ petition: petition} ) %>
     </div>
-    <div class="col-sm-2 col-slim">
-    <span><small><strong>Expires</strong></small><%= '00/00/00' %></span>
+
+    <div class="col-sm-3 col-slim">
+      <div style="height:100%;">
+        <div style="vertical-align:middle;">
+        <%= render partial:'petitions/countdown', locals:{ petition: petition, reload_on_finish: false}  %>
+        </div>
+      </div>
     </div>
   </div>

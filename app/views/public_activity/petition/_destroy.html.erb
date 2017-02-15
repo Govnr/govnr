@@ -1,9 +1,12 @@
 <% @panel_class = 'panel-danger' %>
 <% @panel_icon = 'fa-bullhorn' %>
 <% @past_participle = 'deleted'  %>
-<% @definite_article = 'a'  %>
+<% @definite_article = 'the'  %>
 <% @object = 'petition'  %>
 <% @body_content = nil %>
 <% @truncate_length = -1 %>
-
-<%= activity_for activity %>
+<% if params[:small] == true %>
+	<%= activity_small_for activity %>
+<% else %>
+	<%= activity_for activity %>
+<% end %>

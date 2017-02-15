@@ -1,7 +1,60 @@
 <% breadcrumb :dashboard %>
 
-<%= render partial: 'quick_stats_bar' %>
-
-<div id="activity_feed">
-  <%= render partial: 'activity_feed' %>
+<div class="row">
+<div class="col-md-6">
+    <div class="panel tool-panel panel-default">
+        <!-- /.panel-heading -->
+        <%= link_to conversations_path do %>
+        <div class="panel-default panel-heading">
+	        <i class="fa fa-envelope fa-fw"></i> Messages
+        </div>
+        <% end %>
+        <div class="panel-body">
+            <ul class="barelist">
+			<%= render partial:'user/recent_messages' %>
+			</ul>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+</div>
+<div class="col-md-6">
+ <div class="panel tool-panel panel-default">
+        <!-- /.panel-heading -->
+        <%= link_to activity_path do %>
+        <div class="panel-default panel-heading">
+        	<i class="fa fa-bell-o fa-fw"></i> Activity
+        </div>
+        <% end %>
+        <div class="panel-body">
+        	<ul class="barelist">
+        	    <%= render partial: 'user/activity_row', collection: get_recent_activity, cached: true %>
+    	    </ul>
+        </div>
+  <!-- /.panel-body -->
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="panel groups-panel panel-default">
+<div class="panel-heading">
+   <i class="fa fa-users fa-fw"></i> Groups
+   <div class="pull-right icon-space">
+     <%= link_to new_group_path, class: 'btn btn-default btn-xs'  do %>
+        <i class="fa fa-plus fa-fw"></i> Create a Group
+     <% end %>
+     <%= link_to find_group_path, class: 'btn btn-default btn-xs'  do %>
+        <i class="fa fa-search fa-fw"></i> Find a Group
+     <% end %>
+     </div>
+</div>
+<div class="panel-body">
+<% @groups.each do |group| %>
+<div class="col-md-12">
+<%= render partial:'groups/header', locals:{group: group, show_week: true} %>
+</div>
+<% end %>
+</div>
+</div>
+</div>
 </div>

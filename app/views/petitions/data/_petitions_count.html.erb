@@ -1,8 +1,8 @@
 <div class="panel panel-default panel-toolbar">
     <div class="panel-heading">
-        <i class="fa fa-line-chart fa-fw"></i> Petition Count
+        <i class="fa fa-line-chart fa-fw"></i> New Petitions
     </div>
     <div class="panel-body panel-toolbar">
-    <%= line_chart Petition.recent_month.group_by_hour(:created_at).count %>
+    <%= line_chart Petition.recent_month.group_by_day(:created_at).count %>
     </div>
 </div>

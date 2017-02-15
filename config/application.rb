@@ -25,5 +25,17 @@ module PanGov
     config.action_view.embed_authenticity_token_in_remote_forms = true
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.autoload_paths += %W(#{config.root}/lib)
+    config.active_job.queue_adapter = :delayed_job
+    Bundler.require(*Rails.groups)
+    Config::Integrations::Rails::Railtie.preload
+
+    attr_writer :comparator
+    def comparator
+    @comparator ||= begin
+          require 'comparators/diff_lcs'
+
+          self.comparator = Comparators::DiffLcs.new
+        end
+    end
   end
 end

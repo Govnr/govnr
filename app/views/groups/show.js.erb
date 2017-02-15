@@ -1,0 +1,15 @@
+<% acts = escape_javascript(
+  render(partial: 'groups/activity/activity', collection: @activities, cached: true)
+) %>
+<% stats = escape_javascript(
+  render(partial: 'groups/activity/activity_filters_bar', cached: true)
+) %>
+$('#activities-container').append('<%= acts %>');
+$('#quick_stats').html('<%= stats %>');
+quick_stats
+// $('.pagination').text
+$('.pagination').replaceWith('<%= escape_javascript (paginate(@activities)) %>');
+if (!$('.pagination').find('.next').length)
+{
+	$('.pagination').replaceWith('');
+}

@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-md-3 col-sm-6">
-      <%= link_to dashboard_path(feed: 'comments'), remote: true do %>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <%= link_to activity_path(feed: 'comment') do %>
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -16,7 +16,8 @@
         </div>
       <% end %>
     </div>
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6  col-xs-6">
+    <%= link_to activity_path(feed: 'petition') do %>
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
@@ -25,40 +26,45 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><%= @petition_activities.size %></div>
-                        <div>Active Petitions</div>
+                        <div>Petitions</div>
                     </div>
                 </div>
             </div>
         </div>
+      <% end %>
     </div>
-    <div class="col-md-3 col-sm-6">
+    <div class="col-md-3 col-sm-6  col-xs-6">
+    <%= link_to activity_path(feed: 'motion') do %>
         <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-university fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">4</div>
-                        <div>Active Motions</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="panel panel-red">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
                         <i class="fa fa-balance-scale fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">2</div>
-                        <div>Active Votes</div>
+                        <div class="huge"><%= @motion_activities.size %></div>
+                        <div>Motions</div>
                     </div>
                 </div>
             </div>
         </div>
+      <% end %>
+    </div>
+    <div class="col-md-3 col-sm-6  col-xs-6">
+    <%= link_to activity_path(feed: 'draft') do %>
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-file-text-o fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><%= @draft_activities.size %></div>
+                        <div>Drafts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
     </div>
 </div>

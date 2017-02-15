@@ -5,5 +5,8 @@
 <% @object = 'comment'  %>
 <% @body_content = activity.trackable.content if activity.trackable %>
 <% @truncate_length = 250 #(set to negative number to bypass truncation) %>
-
-<%= activity_for activity %>
+<% if params[:small] == true %>
+	<%= activity_small_for activity %>
+<% else %>
+	<%= activity_for activity %>
+<% end %>

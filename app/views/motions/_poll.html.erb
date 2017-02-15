@@ -1,0 +1,5 @@
+ <%= simple_form_for :poll, remote:true, :url => url_for(:action => 'poll', :controller => 'motions',
+    :method => 'post', id: @motion.id ) do |f| %>
+   <%= f.submit "YES", :class => 'btn btn-success'%>
+   <%= f.submit "NO", :class => 'btn btn-danger'%>
+  <% end %>

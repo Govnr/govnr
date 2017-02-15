@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @statute.name %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @statute.content %>
+</p>
+
+<p>
+  <strong>Motion:</strong>
+  <%= @statute.motion_id %>
+</p>
+
+<%= link_to 'Edit', edit_statute_path(@statute) %> |
+<%= link_to 'Back', statutes_path %>

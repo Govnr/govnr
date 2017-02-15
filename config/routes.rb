@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'admin/configuration' => 'admin#configuration', :as => :admin_configuration
+  post '/admin/update' => 'admin#update', :as => :admin_update
+
   get 'search' => 'search#search', :as => :search
-
-  get 'admin/configuration'
-
-  wiki_root '/wiki'
 
   devise_for :users, :path => '', :path_names => { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register' },
     :controllers => { registrations: 'registrations' }
@@ -19,6 +18,12 @@ Rails.application.routes.draw do
   
   authenticated :user do
     root :to => 'dashboard#index', as: :authenticated_root
+  end
+
+  unauthenticated do
+    devise_scope :user do
+      root to: "dashboard#public", as: :unauthenticated_root
+    end
   end
   
   # get 'login' => 'devise/sessions#new'
@@ -44,18 +49,22 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  resources :petitions do
-    get 'data'
+  wiki_root '/wiki'
+
+
+  get '/drafts/:id/history', to: 'drafts#history', as: :draft_history
+  get '/drafts/:id/compare', to: 'drafts#compare', as: :draft_compare
+  post '/drafts/:id/', to: 'drafts#update', as: :draft_update
+  resources :drafts do
     resources :comments
-    collection do
-      get :data
-    end
   end
 
-  # get "petitions/support/", :to => 'petitions#support', :as => :petition_support
-  post 'petitions/support', :to => 'petitions#support', :as => :petition_support_post
-  # get 'data/petitions/', :to => 'data#petitions', :as => 'data_petitions'
-  get 'petitions/tags/:tag', to: 'petitions#index', as: :tag
+  resources :statutes
+
+  # Avatar routes
+  get "avatar/:size/:background/:text" => Dragonfly.app.endpoint { |params, app|
+    app.generate(:initial_avatar, URI.unescape(params[:text]), { size: params[:size], background_color: params[:background] })
+  }, as: :avatar
 
   resources :relationships,       only: [:create, :destroy]
 
@@ -71,6 +80,70 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/activity' => 'dashboard#activity'
+
+  # match 'groups/:id' => ':group_name', as: :group
+  get 'groups/find', to: 'groups#find', as: :find_group
+  get 'groups/:group_id/join', to: 'groups#join', as: :join_group
+  get 'groups/:group_id/set_active', to: 'groups#set_active', as: :set_active_group
+  post 'groups/:group_id/users/:id/assign_role', to: 'groups#assign_role', as: :group_assign_role
+  post 'groups/:group_id/settings/update', to: 'groups#update_settings', as: :group_update_settings
+  post 'groups/:group_id/petitions/support', :to => 'petitions#support', :as => :petition_support_post
+  get 'groups/:group_id/petitions/tags/:tag', to: 'petitions#index', as: :petition_tag
+  post 'groups/:group_id/motions/[:id]/poll', :to => 'motions#poll', :as => :motion_poll
+  post 'groups/:group_id/motions/[:id]/vote', :to => 'motions#vote', :as => :motion_vote
+  get ':group_id/motions/tags/:tag', to: 'motions#index', as: :motion_tag
+  resources :groups, only: [:show, :new, :create, :index, :edit], path: "" do
+    resources :users do
+      member do
+        get :following, :followers
+      end
+    end
+    resources :petitions do
+      resources :comments
+      collection do
+        get :data
+      end
+    end
+    resources :motions do
+      resources :comments
+      collection do
+        get :data
+      end
+    end
+    resources :drafts do
+      resources :comments
+      collection do
+        get :data
+      end
+    end
+    resources :statutes do
+      collection do
+        get :data
+      end
+    end
+    member do
+      get :settings
+      get :activity
+      get :search
+      # get :conversations
+    end
+  end
+  # resources :petitions do
+  #   resources :comments
+  #   collection do
+  #     get :data
+  #   end
+  # end
+
+
+  # resources :motions do
+  #   resources :comments
+  #   collection do
+  #     get :data
+  #   end
+  # end
+
   # resources :conversations, :controller => "user_conversations" do
   #   resources :messages
   #   member do
@@ -78,10 +151,7 @@ Rails.application.routes.draw do
   #     post :mark_as_unread
   #   end
   # end
-
- get '/dashboard' => 'dashboard#index'
  # get '/following' => 'users#following'
- get '/' => 'dashboard#public'
 
 # match "signup", :to => "users#new"
 # match "login", :to => "sessions#login"
@@ -97,11 +167,13 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   
-  root 'pages#index'
+  root 'dashboard#index'
 
   get ':controller(/:action(/:id))(.:format)'
 
-    # get 'tags/:tag', to: 'petitions#index', as: :tag
+  # get '/:id', to: 'groups#show', as: :group
+
+  # get 'tags/:tag', to: 'petitions#index', as: :tag
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

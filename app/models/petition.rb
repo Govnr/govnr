@@ -1,9 +1,28 @@
 class Petition < ActiveRecord::Base
+	belongs_to :group
+	has_one :motion
 	has_many :comments, :as => :commentable, :dependent => :destroy
 	acts_as_taggable
 	acts_as_votable
 	include PublicActivity::Model
+	PublicActivity.set_controller(PetitionsController)
   	tracked except: :update, owner: Proc.new{ |controller, model| controller.current_user||nil }
+
+	include TimeFormatting
+
+	def self.expire(group_id, petition_id)
+	  @group = Group.find(group_id)
+  	  @petition = @group.petitions.find(petition_id)
+  	  if @petition.votes_for.size >= @petition.required_votes #Settings.motions.required_majority_percent
+  	  	#petition passes to motion
+  	  	@motion = @group.motions.new(name: @petition.name, content: @petition.content, petition_id: @petition.id)
+  	  	@motion.voting_starts_at = Time.now + TimeFormatting.convert_to_seconds(@group.group_setting.motions_delay_before_voting.to_f,@group.group_setting.motions_delay_before_voting_unit)
+  	  	@motion.voting_ends_at = @motion.voting_starts_at + TimeFormatting.convert_to_seconds(@group.group_setting.motions_voting_duration.to_f,@group.group_setting.motions_voting_duration_unit)
+  	  	Motion.delay(run_at: @motion.voting_ends_at).vote_ended(@group.id,@motion.id)
+  	  	@motion.tag_list = @petition.tag_list
+  	  	@motion.save
+  	  end
+  	end
 
  	searchable do
 	    text :name, :content
@@ -19,19 +38,36 @@ class Petition < ActiveRecord::Base
 	end
 
 	def required_votes
-		@votes = (User.all.size / 100) * 5
-		unless @votes < 1 
-			return @votes
+		if group.present?
+			@votes = (User.all.size / 100) * group.group_setting.petitions_required_support_percent
+			unless @votes < 1 
+				return @votes
+			else 
+				return 1
+			end
 		else 
-			return 10
+			return 1
 		end
 	end
 
-	def self.support_spread
+	def expired
+		return expires_at.past?
+	end
+
+	def support_percent
+	   	@votes = votes_for.size
+	   	if @votes > 0
+	   	 return (@votes / required_votes ) * 100
+	    else
+	   	 return 0
+	    end
+	end
+
+	def self.support_spread(group_id)
 	    @c1 = 0
 	    @c2 = 0
 	    @c3 = 0
-	    Petition.all.each do |petition|
+	    Petition.where('group_id = ?',group_id).each do |petition|
 	      @votes_per = ((petition.votes_for.size/petition.required_votes) * 100)
 	      case @votes_per
 	        when 0..30
@@ -43,6 +79,29 @@ class Petition < ActiveRecord::Base
 	      end
 	    end
 	    return [@c1,@c2,@c3]
+	end
+
+	def self.expiry_spread(group_id)
+	    @under1 = 0
+	    @under7 = 0
+	    @under30 = 0
+	    @expired = 0
+	    Petition.where('group_id = ?',group_id).each do |petition|
+	      @expires = (Time.now - petition.expires_at).to_i
+	      if (@expires < 0)
+	      	@expired += 1
+	      else
+		      case @expires
+		        when  0..1
+		         	@under1 += 1
+		        when 2..6
+		         	@under7 += 1
+		        when 7..30
+		         	@under30 += 1
+		      end
+		  end
+	    end
+	    return [ @expired, @under1, @under7, @under30]
 	end
 
 	filterrific(

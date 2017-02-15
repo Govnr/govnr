@@ -1,0 +1,8 @@
+<% breadcrumb :draft, @draft %>
+
+<%= render partial:'draft_bar' %>
+
+<pre>
+ <%= simple_format(@draft.content) %>
+ </pre>
+<!-- /.panel -->

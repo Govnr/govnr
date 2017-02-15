@@ -1,0 +1,63 @@
+<% if @motion.voting_starts_at.past? && @motion.voting_ends_at.future?%>
+	<div style="height:100%; width: 100%;">
+	<div class="col-xs-6 col-slim">
+		<!-- <div style="width:100%; height: 80%;"> -->
+		<%= render partial:'vote_results' %>
+		<!-- </div> -->
+	</div>
+	<div class="col-xs-6 col-slim">
+	  <p>
+        <%= render partial: 'motions/countdown', locals:{ motion: @motion, reload_on_finish: true} %>
+      </p>
+      <p>
+      <strong>
+      Votes for: <%= @motion.get_upvotes.size %> (<%= @motion.voteyespercent %>%)<br />
+	  Votes against: <%= @motion.get_downvotes.size %> (<%= @motion.votenopercent %>%)
+	  </strong>
+	  </p>
+	  <p>
+      <small>
+      A majority of <%= Settings.motions.required_majority_percent %>% is required to carry the motion.
+	  </small>
+	  </p>
+		<div>
+		  <% if (@current_user.voted_for? @motion) && !(Settings.motions.allow_vote_change == 1)%>
+			<small><strong>You've already voted on this motion.</strong></small>
+		  <% else %>
+		  <div class="row-spacer"></div>
+		<div align="center">
+		  <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#motion-vote-modal">
+			  <i class="icon-plus icon-white"></i> Vote on this motion
+		  </button>
+		</div>
+		  <% end %>
+		</div>
+	</div>
+	</div>
+<% elsif @motion.voting_ends_at.past?%>
+	<div class="col-xs-6 col-slim">
+		<!-- <div style="width:100%; height: 80%;"> -->
+		<%= render partial:'vote_results' %>
+		<!-- </div> -->
+	</div>
+      <div class="col-xs-6 col-slim">
+		<p>
+		<%= render partial: 'motions/countdown', locals:{ motion: @motion, reload_on_finish: true} %>
+		</p>
+	  	<%= render partial:'vote_summary', locals:{ motion: @motion } %>
+	  </div>
+	  
+<% else %>
+ 	  <p>
+        <%= render partial: 'motions/countdown', locals:{ motion: @motion, reload_on_finish: true} %>
+      </p>
+	<div>
+		<small>Voting is currently closed.</small>
+	</div>
+	<%= render partial:'poll_modal' %>
+	<div align="center">
+	  <button class="btn btn-default" data-toggle="modal" data-target="#motion-poll-modal">
+		  <i class="icon-plus icon-white"></i> Take part in a poll
+	  </button>
+	</div>
+<% end %>

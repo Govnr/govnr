@@ -4,6 +4,7 @@ class CreatePetitions < ActiveRecord::Migration
       t.string :name
       t.text :content
       t.integer :creator_id
+      t.integer :group_id
       t.datetime :expires_at
       t.timestamps null: false
     end

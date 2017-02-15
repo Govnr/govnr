@@ -16,6 +16,7 @@
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require dataTables/jquery.dataTables
 //= require jquery.turbolinks
+//= require jquery.countdown
 //= require chosen-jquery
 //= require metis_menu/metisMenu.min
 //= require bootstrap/bootstrap.min
@@ -29,6 +30,7 @@
 //= require filterrific/filterrific-jquery
 //= require chart/Chart.bundle.min
 //= require chartkick
+//= require govnr
 
 
 

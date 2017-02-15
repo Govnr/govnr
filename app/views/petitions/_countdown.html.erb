@@ -1,0 +1,15 @@
+<i class="fa fa-clock-o fa-fw"></i>
+<% if petition.expired %>
+	<strong>Expired</strong>
+<% else %>
+<small><strong>Expires in: </strong></small>
+<span id="countdown-container-<%= petition.id %>"></span>
+<script type="text/javascript">
+   $("#countdown-container-<%= petition.id %>").countdown( new Date(<%= petition.expires_at.to_f * 1000 %>), function(event) {
+     $(this).text(
+       event.strftime('%D days %H:%M:%S')
+     );
+   })<% if reload_on_finish %>.on('finish.countdown', function() {
+           window.location.reload(true);})<% else %>.on('finish.countdown', function() { $("#countdown-container-<%= petition.id %>").html('<strong>Expired</strong>');})<% end %>;
+</script>
+<% end %>

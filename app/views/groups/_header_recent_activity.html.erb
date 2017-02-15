@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-lg-12">
+   <div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+	    <span class="bar-title"><%= group_avatar(group, class: ' icon-space', style: 'width:36px;height:36px;') %> <%= group.name %></span>
+		<div class="pull-right icon-space">
+			<i class="fa fa-users fa-fw"></i>
+			 <small> <strong>Users:</strong> <%= group.users.size %></small>
+ 		</div>
+ 			 <% membership = group.group_memberships.where('user_id = ?',current_user.id).first %>
+ 			 <% if membership.present? %>
+				 <% if membership.has_role? :admin %>
+					 <div class="pull-right icon-space">
+					 <%= link_to settings_group_path(id: group.slug), class: 'btn btn-default btn-xs'  do %>
+		            	<i class="fa fa-cogs fa-fw"></i> Group Settings
+		          	 <% end %>
+		          	 </div>
+	          	 <% end %>
+	          	 <% if current_group.id != group.id %>
+					 <div class="pull-right icon-space">
+					 <%= link_to set_active_group_path(group_id: group.slug), class: 'btn btn-default btn-xs'  do %>
+		            	<i class="fa fa-sign-in fa-fw"></i> Enter Group
+		          	 <% end %>
+		          	 </div>
+	          	 <% end %>
+	          <% else %>
+	          	<div class="pull-right icon-space">
+		       		<%= link_to join_group_path(group_id: group.slug), class: 'btn btn-default btn-xs'  do %>
+		            <i class="fa fa-user-plus fa-fw"></i> Join Group
+		          <% end %>
+		        </div>
+	          <% end %>
+		<div class="clearfix"></div>
+		<div class="header-content">
+		<div class="activity-week-container">
+		<%= activity_week(group.id) %>
+		<div class="clearfix"></div>
+		</div>
+		</div>
+
+    </div>
+   </div>
+  </div>
+</div>

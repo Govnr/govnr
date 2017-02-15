@@ -1,19 +1,28 @@
-
-<div class="panel panel-default">
-  <div class="panel-heading">New Petition</div>
-
- <div class="panel-body">
-<%= simple_form_for(@petition) do |f| %>
+<%= simple_form_for([@group, @petition]) do |f| %>
   <%= f.error_notification %>
   <%= f.hidden_field :creator_id, :value => current_user.id %>
-
+  <%= f.hidden_field :group_id, :value => current_group.id %>
   <div class="form-group">
-    <%= f.input :name, class: 'form-control' %>
-    <%= f.input :content, class: 'form-control fixed-text-input'  %>
-    <%= f.input :tag_list, class: 'form-control', label: "Tags (separated by commas)"  %>
+
+    <strong>Name</strong>
+    <p class="small text-muted input-guide">
+    Enter a name for the new petition. Simply state what you want the petition to achieve. Remember the same name will be used if the petition is passed to a motion or draft. There is a 140 character limit. Please write in title-case.
+    </p>
+    <%= f.input :name, as: "string", class: 'form-control', label: false %>
+
+    <strong>Tags</strong>
+    <p class="small text-muted input-guide">
+    Tags are labels used to categorize objects on the platform. Enter words or phrases that will help people find the petition, separated by commas.
+    </p>
+    <%= f.input :tag_list, class: 'form-control', label: false  %>
+
+    <strong>Content</strong>
+    <p class="small text-muted input-guide">
+    The main body of the petition should describe in detail what you want the petition to change. It may not be edited at any point, and will be transferred if the petition is passed to a motion or draft.
+    </p>
+    <%= f.input :content, as: "text", class: 'form-control', label: false, input_html: {rows: 15, style: "min-height:0px;" } %>
+    
     <%= f.button :submit, class: 'btn btn-primary' %>
   </div>
 
 <% end %>
-</div>
-</div>

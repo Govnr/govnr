@@ -1,0 +1,9 @@
+---
+petitions:
+  required_vote_percent: 6.0
+  expiry_time: 12.0
+motions:
+  delay_before_voting: 5.0
+  voting_duration: 20.0
+  required_majority_percent: 51.0
+  allow_vote_change: 1

@@ -1,9 +1,5 @@
-crumb :root do
-  link "Dashboard", root_path
-end
-
 crumb :wiki do
-  link "Wiki", wiki_all_path
+  link "Wiki", drafts_path
 end
 
 crumb :wiki_page do |wiki_page|

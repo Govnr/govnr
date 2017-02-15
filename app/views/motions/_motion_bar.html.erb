@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-lg-12">
+   <div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+    <span class="bar-title"><i class="fa fa-university fa-fw"></i> <%= @motion.name %></span>
+	<div class="pull-right icon-space">
+	<i class="fa fa-bullhorn fa-fw"></i>
+	 <small> <strong>Petition:</strong> <%= link_to @motion.petition_id, group_petition_path(id: @motion.petition_id) %></small>
+	 <br >
+	 <i class="fa fa-tags fa-fw"></i>
+	 <small> <strong>Tags:</strong> <%= @motion.tag_list %></small>
+	 <br />
+	</div>
+	<div class="clearfix"></div>
+    </div>
+   </div>
+  </div>
+</div>

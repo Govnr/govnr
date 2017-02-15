@@ -1,0 +1,31 @@
+<% @expired = @petition.expired %>
+<% @req_supporter_text = "supporters will trigger a motion." %>
+<% if @expired %>
+  <% @req_supporter_text = "supporters were needed to trigger a motion." %>
+<% end %>
+<small>A total of <i><%= @req_votes %></i> <%= @req_supporter_text %></small>
+<% if @expired %>
+	<% if @petition.get_upvotes.size >= @petition.required_votes %>
+		<% if @petition.motion.present? %>
+			<br /><br />
+			<div class="panel panel-default panel-slim">
+			<div class="panel-heading">
+				<%= link_to(group_motion_path(group_id: @group.slug, id: @petition.motion.id)) do %>
+				<%= motion_icon %> 
+				<%= @petition.motion.name %>
+			<% end %>
+			<div class="pull-right">
+			<%= render partial:'motions/countdown', locals: {motion: @petition.motion, reload_on_finish: true} %>
+			</div>
+			<% if @petition.motion.voting_ends_at.past? %>
+				<%= render partial:'motions/vote_summary', locals: {motion: @petition.motion} %>
+			<% end %>
+			</div>
+			</div>
+		<% else %>
+			<small>A motion on this petition will be granted.</small>
+		<% end %>
+	<% else %>
+		<small>No motion was granted.</small>
+	<% end %>
+<% end %>

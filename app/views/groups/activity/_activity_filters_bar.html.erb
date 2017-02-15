@@ -1,0 +1,148 @@
+<div class="row group-activity-filter-bar">
+    <div class="col-md-2 col-sm-4 col-xs-4">
+      <%= link_to group_path(group_id:@group_id, feed: 'all'), class: 'filter-link', remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'All' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                    <div class="col-xs-12 text-right">
+                        <div align="center" class="container-fluid huge">
+                            <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                                <i class="fa fa-newspaper-o fa-fw  icon-space"></i>
+                            </div> 
+                            <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                                <%= @all_activities.size %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>All</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+     <div class="col-md-2 col-sm-4 col-xs-4">
+      <%= link_to group_path(group_id:@group_id, feed: 'followed'), class: 'filter-link',  remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'Followed' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                     <div align="center" class="container-fluid huge">
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                            <i class="fa fa-users fa-fw  icon-space"></i>
+                        </div> 
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                            <%= @followed_activities.size %>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>Followed</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-4">
+      <%= link_to group_path(group_id:@group_id, feed: 'comment'), class: 'filter-link',  remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'Comment' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                     <div align="center" class="container-fluid huge">
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                            <i class="fa fa-comment fa-fw  icon-space"></i>
+                        </div> 
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                            <%= @comment_activities.size %>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>Comments</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-2 col-sm-4  col-xs-4">
+    <%= link_to group_path(group_id:@group_id, feed: 'petition'), class: 'filter-link',  remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'Petition' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                     <div align="center" class="container-fluid huge">
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                            <i class="fa fa-bullhorn fa-fw  icon-space"></i>
+                        </div> 
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                            <%= @petition_activities.size %>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>Petitions</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-2 col-sm-4  col-xs-4">
+    <%= link_to group_path(group_id:@group_id, feed: 'motion'), class: 'filter-link',  remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'Motion' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                     <div align="center" class="container-fluid huge">
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                            <i class="fa fa-balance-scale fa-fw  icon-space"></i>
+                        </div> 
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                            <%= @motion_activities.size %>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>Motions</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-2 col-sm-4  col-xs-4">
+    <%= link_to group_path(group_id:@group_id, feed: 'draft'), class: 'filter-link',  
+        remote: true do %>
+        <div class="panel panel-grey <%= 'panel-grey-selected' if @feed == 'Draft' %>">
+            <div class="panel-heading">
+                <div class="row">    
+                     <div align="center" class="container-fluid huge">
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-icon">
+                            <i class="fa fa-file-text-o fa-fw  icon-space"></i>
+                        </div> 
+                        <div class="col-md-12 col-sm-6 col-xs-6 activity-filter-count">
+                            <%= @draft_activities.size %>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <div>Drafts</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+</div>
+<script>
+    $('.filter-link').bind('ajax:beforeSend', function() {
+        $("#activities-container").html('');
+    });
+</script>

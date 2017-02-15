@@ -21,5 +21,4 @@ class WikiPagesController < ApplicationController
 	def not_allowed
 	  redirect_to login_path # Redirect to login_url when user tries something what not allowed
 	end
-
 end

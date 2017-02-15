@@ -1,0 +1,49 @@
+<% breadcrumb :drafts %>
+
+ <div class="row">
+ <div class="col-lg-12">
+ <div class="panel panel-default panel-toolbar">
+  <div class="panel-heading">
+        <i class="fa fa-tag fa-fw"></i> Tags
+    </div>
+    <div class="panel-body panel-toolbar">
+    <div id="tag_cloud">
+
+<% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+ <%= link_to tag.name, tag_path(tag.name), :class => css_class %>
+<% end %>
+    </div>
+  </div>
+  </div>
+
+</div>
+<!-- /col-lg6 -->
+</div>
+
+<div class="row">
+ <!-- /col-lg-6 -->
+  <div class="col-lg-12">
+   <div class="panel panel-default panel-toolbar">
+    <div class="panel-heading">
+       <%= render(partial: 'layouts/filters', locals:{form_path: drafts_path}) %>
+    </div>
+  </div>
+ </div>
+ </div>
+
+
+
+<div id="page_results">
+
+<%= render(partial: 'drafts/list', locals: { drafts: @drafts }) %>
+<script type="text/javascript" >
+
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });
+
+</script>
+</div>

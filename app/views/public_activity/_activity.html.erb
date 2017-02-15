@@ -1,20 +1,52 @@
+<% @link = activity_path %>
+<% @activity_group = nil %>
+<% if activity.trackable %>
+	<% @link = activity.trackable %>
+<% end %>
+<% if defined? activity.trackable.commentable %>
+	<% @link = [activity.trackable.commentable, activity.trackable] %>
+	<% if defined? activity.trackable.commentable.group %>
+		<% @activity_group = activity.trackable.commentable.group  %>
+		<% @link = [activity.trackable.commentable.group,activity.trackable.commentable] %>
+	<% end %>
+<% else %>
+	<% if defined? activity.trackable.group %>
+		<% @activity_group = activity.trackable.group %>
+		<% @link = [activity.trackable.group,activity.trackable] %>
+	<% end %>
+<% end %>
+<% if @activity_group.present? %>
 <article class="panel <%= @panel_class %>">
       <div class="panel-heading">
-     <span><i class="fa <%= @panel_icon %>"></i> 
-     <%= link_to activity.owner.name, activity.owner if activity.owner %>
+     <span>
+     	<%  if activity.owner %>
+     	<%= link_to [@activity_group, activity.owner] do %>
+     		<%= user_avatar(activity.owner, class: 'img-avatar img-circle', style: 'width:24px;height:24px;') %>
+     		<%= activity.owner.name %>
+     	<% end %>
+     	<% end %>
      </span>
 
      	  <div class="time pull-right"><small><i class="fa fa-clock-o"></i><time> <%= activity.created_at %></time></small></div>
-	<% if activity.trackable %>
-	 <%= activity.trackable_type %>
+	<% if activity.trackable.present? %>
 		<% if defined? activity.trackable.commentable %>
 		  <% if activity.trackable.commentable.present? %>
-		  <%= link_to @past_participle,  [activity.trackable.commentable, activity.trackable] %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> '<%=  link_to activity.trackable.commentable.name,  [activity.trackable.commentable] %>'
+		  	<%= link_to [@activity_group, activity.trackable.commentable, activity.trackable] do %> 
+		  	<i class="fa <%= @panel_icon %>"></i> <%= @past_participle %> <% end %><%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> <%=  link_to  [@activity_group, activity.trackable.commentable] do %>
+		  	<%= activity.trackable.commentable.name %>
+		  	<% end %>
 		  <% else %>
 		     <%= @past_participle %> <%= @definite_article %> <%= activity.trackable.commentable_type.to_s.downcase %> which has now been removed.
 		  <% end %>
 		<% else %>
-		 <%= @past_participle %> <%= @definite_article %> <%= @object %> '<%= link_to activity.trackable.name,  activity.trackable %>'
+			<% if @activity_group.present? %>
+		 	 <%= @past_participle %> <%= @definite_article %> <%= @object %> <%= link_to [@activity_group,activity.trackable] do %>
+				 	<i class="fa <%= @panel_icon %>"></i> 
+		 	 		<%= activity.trackable.name %>
+		 	     <% end %>
+		 	 <% else %>
+		 	  <%= @past_participle %> <%= @definite_article %> <%= @object %>
+		 	 <% end %>
 		<% end %>
 
 	    </div>
@@ -45,3 +77,4 @@
 	  </div>
 	<% end %>
 </article>
+<% end %>
