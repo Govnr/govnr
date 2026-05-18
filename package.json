@@ -1,0 +1,10 @@
+{
+  "name": "@govnr/core",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo \"No build configured yet\"",
+    "test": "echo \"No tests configured yet\"",
+    "lint": "echo \"No lint configured yet\""
+  }
+}
