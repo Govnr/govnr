@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("POSTGRES_HOST", "postgres") %>
+  username: <%= ENV.fetch("POSTGRES_USER", "govnr") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "govnr") %>
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("POSTGRES_DB", "gov") %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("POSTGRES_TEST_DB", "govtest") %>
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+

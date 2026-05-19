@@ -6,6 +6,8 @@ This layer owns entities, value objects, policies, domain events, and invariants
 
 Domain documentation belongs here, alongside the model it describes. Use this area for Govnr civic concepts, terminology, lifecycle rules, modelling decisions, and ubiquitous language.
 
+Start with [DOMAIN_SPECIFICATION.md](DOMAIN_SPECIFICATION.md).
+
 Rules:
 
 - No HTTP framework imports.

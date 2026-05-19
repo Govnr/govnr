@@ -1,0 +1,46 @@
+services:
+  web:
+    build:
+      context: .
+    platform: linux/amd64
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: govnr
+      POSTGRES_PASSWORD: govnr
+      POSTGRES_DB: gov
+      SOLR_HOST: solr
+      SOLR_PORT: "8983"
+    depends_on:
+      - postgres
+      - solr
+    volumes:
+      - bundle:/bundle
+
+  postgres:
+    image: postgres:9.6
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: govnr
+      POSTGRES_PASSWORD: govnr
+      POSTGRES_DB: gov
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  solr:
+    image: solr:5.5
+    platform: linux/amd64
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr-data:/opt/solr/server/solr/mycores
+
+volumes:
+  bundle:
+  postgres-data:
+  solr-data:
+

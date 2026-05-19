@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+rm -f tmp/pids/server.pid
+
+if [ -n "$POSTGRES_HOST" ]; then
+  until pg_isready -h "$POSTGRES_HOST" -U "${POSTGRES_USER:-govnr}" >/dev/null 2>&1; do
+    echo "Waiting for PostgreSQL at $POSTGRES_HOST..."
+    sleep 1
+  done
+fi
+
+exec "$@"
+

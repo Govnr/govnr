@@ -1,0 +1,10 @@
+.git
+.bundle
+log/*
+tmp/*
+vendor/bundle
+solr/*/data
+solr/*/index
+solr/pids
+public/system
+
